@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>POS Dashboard - DM Battery House</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#f7f9ff",
+                    "on-primary-container": "#8ebdf9",
+                    "surface-bright": "#f7f9ff",
+                    "on-primary-fixed-variant": "#07497d",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#d2e4ff",
+                    "on-error": "#ffffff",
+                    "outline": "#727780",
+                    "outline-variant": "#c2c7d1",
+                    "on-surface": "#091d2e",
+                    "tertiary-container": "#6a4100",
+                    "on-background": "#091d2e",
+                    "on-secondary-fixed-variant": "#005228",
+                    "error-container": "#ffdad6",
+                    "surface-container": "#e3efff",
+                    "on-tertiary-fixed-variant": "#663e00",
+                    "surface-variant": "#d1e4fb",
+                    "secondary": "#006d37",
+                    "on-tertiary-fixed": "#2b1700",
+                    "tertiary": "#4b2d00",
+                    "secondary-fixed-dim": "#4ae183",
+                    "tertiary-fixed": "#ffddb9",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-container": "#ffa725",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-primary": "#a0c9ff",
+                    "background": "#f7f9ff",
+                    "inverse-on-surface": "#e8f2ff",
+                    "surface-container-highest": "#d1e4fb",
+                    "on-primary-fixed": "#001c37",
+                    "primary-fixed-dim": "#a0c9ff",
+                    "on-secondary-fixed": "#00210c",
+                    "surface-container-low": "#edf4ff",
+                    "on-surface-variant": "#42474f",
+                    "surface-tint": "#2d6197",
+                    "on-secondary-container": "#00743a",
+                    "on-primary": "#ffffff",
+                    "secondary-container": "#6bfe9c",
+                    "inverse-surface": "#203243",
+                    "surface-dim": "#c9dcf3",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "primary-container": "#0f4c81",
+                    "primary": "#00355f",
+                    "surface-container-high": "#d9eaff",
+                    "secondary-fixed": "#6bfe9c",
+                    "tertiary-fixed-dim": "#ffb961"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1280px",
+                    "margin-desktop": "48px",
+                    "gutter": "24px",
+                    "base": "8px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "label-sm": [
+                            "Inter"
+                    ],
+                    "display-lg": [
+                            "Inter"
+                    ],
+                    "body-lg": [
+                            "Inter"
+                    ],
+                    "mono-data": [
+                            "Inter"
+                    ],
+                    "headline-md": [
+                            "Inter"
+                    ],
+                    "display-lg-mobile": [
+                            "Inter"
+                    ],
+                    "body-md": [
+                            "Inter"
+                    ]
+            },
+            "fontSize": {
+                    "label-sm": [
+                            "13px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "display-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "mono-data": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "display-lg-mobile": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface h-screen overflow-hidden flex font-body-md">
+<!-- SideNavBar (Shared Component) -->
+<nav class="fixed left-0 top-0 h-screen w-64 bg-surface-container-low dark:bg-surface-container-lowest flex flex-col h-full p-base space-y-2 z-50">
+<div class="p-4 mb-6">
+<h1 class="font-headline-md text-headline-md font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-3xl">battery_charging_full</span>
+                DM Battery House
+            </h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Admin Panel • Technical Operations</p>
+</div>
+<div class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg hover:bg-surface-container-high transition-all active:translate-x-1 duration-150 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg hover:bg-surface-container-high transition-all active:translate-x-1 duration-150 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+                Inventory
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold hover:bg-surface-container-high transition-all active:translate-x-1 duration-150 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">point_of_sale</span>
+                POS
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg hover:bg-surface-container-high transition-all active:translate-x-1 duration-150 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">analytics</span>
+                Reports
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg hover:bg-surface-container-high transition-all active:translate-x-1 duration-150 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Management
+            </a>
+</div>
+<div class="mt-auto space-y-1 pt-4 border-t border-outline-variant/30">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">help</span>
+                Support
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">logout</span>
+                Logout
+            </a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="ml-64 flex-1 flex flex-col h-screen overflow-hidden">
+<!-- TopNavBar (Shared Component) -->
+<header class="sticky top-0 w-full z-40 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md border-b border-outline-variant/20 flex justify-between items-center h-16 px-gutter w-full">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-full focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-shadow text-body-md font-body-md" placeholder="Search products by SKU or Name..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-variant/40 rounded-full active:scale-90 transition-transform">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-variant/40 rounded-full active:scale-90 transition-transform">
+<span class="material-symbols-outlined">apps</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center ml-4 font-bold text-sm">
+                    AD
+                </div>
+</div>
+</header>
+<!-- POS Workspace -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Left Category Sidebar & Product Grid -->
+<div class="flex-1 flex flex-col min-w-0 bg-surface-bright">
+<!-- Category Filter -->
+<div class="px-gutter py-4 flex gap-2 overflow-x-auto border-b border-outline-variant/20">
+<button class="px-4 py-2 bg-primary text-on-primary rounded-full font-label-sm text-label-sm whitespace-nowrap">All Products</button>
+<button class="px-4 py-2 bg-surface-container-lowest border border-outline-variant text-on-surface rounded-full font-label-sm text-label-sm hover:bg-surface-container-low transition-colors whitespace-nowrap">Automotive Batteries</button>
+<button class="px-4 py-2 bg-surface-container-lowest border border-outline-variant text-on-surface rounded-full font-label-sm text-label-sm hover:bg-surface-container-low transition-colors whitespace-nowrap">Solar Panels</button>
+<button class="px-4 py-2 bg-surface-container-lowest border border-outline-variant text-on-surface rounded-full font-label-sm text-label-sm hover:bg-surface-container-low transition-colors whitespace-nowrap">UPS Systems</button>
+<button class="px-4 py-2 bg-surface-container-lowest border border-outline-variant text-on-surface rounded-full font-label-sm text-label-sm hover:bg-surface-container-low transition-colors whitespace-nowrap">Inverters</button>
+</div>
+<!-- Product Grid -->
+<div class="flex-1 overflow-y-auto p-gutter">
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+<!-- Product Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer flex flex-col group">
+<div class="h-32 bg-surface-container flex items-center justify-center p-4 relative">
+<img class="w-full h-full object-contain mix-blend-multiply" data-alt="A clean, professional studio shot of a heavy-duty automotive car battery against a pure white background. The battery is dark grey with bright red and blue terminal caps. The lighting is bright and even, highlighting the technical details and robust casing of the battery, suitable for a retail POS system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuATGC11NAnzpiSwiQU5V5lz_ZDG3la3Adr1ul2OklVMFVW3KlAkQq-T8yhiAfvD_EVDDKnkiFAQMNTKC_68CM_uJRidz1XLgDCEau1B8JRKeyWJ4H4pr-WwmQKOX5UrZRpXw-S9UQdNqVaZVXMg2ASz6TeQyhTX7huiCA1mML4E6Hx2_Ehm69hxGlJNybYpGXK3FSZbhVBsWLrUwff8EtbfJOIJNKXSrfB7FiUbw1_6JuvhklPVhQ0m8w"/>
+<div class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-4xl">add_circle</span>
+</div>
+</div>
+<div class="p-3 flex-1 flex flex-col">
+<h3 class="font-mono-data text-mono-data font-semibold text-on-surface line-clamp-2 mb-1">DM Auto Premium 12V 70Ah</h3>
+<p class="text-xs text-outline mb-2">SKU: DM-A70-12</p>
+<div class="mt-auto flex justify-between items-end">
+<span class="font-headline-md text-headline-md text-primary">$145.00</span>
+<span class="text-xs text-secondary-container bg-secondary/10 px-2 py-1 rounded font-medium">12 in stock</span>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer flex flex-col group">
+<div class="h-32 bg-surface-container flex items-center justify-center p-4 relative">
+<img class="w-full h-full object-contain mix-blend-multiply" data-alt="A sleek, modern solar panel isolated on a light grey background. The panel has a distinct grid pattern of dark blue photovoltaic cells with a silver aluminum frame. The lighting suggests a clean, technical environment, emphasizing renewable energy technology for an industrial catalog." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvAAVqF-IVUq4iL9rZ-NYaGwWWXr_2pS6euPyuVEcMEX0_99LAsyvMwhzMZXXMUuYX1aFRcdCBZTvjfTGqWyA4I2Te4JOQZALLJzW0bq25LyNmF5ihr7fb4JAo4UB-uS9EywlNKZWUUo-mxKmYm54cxugfQligaZPFOp_SMACSmgb3iyO1BsIiVhyEyQBCC9U1McxG8lGV_LUeJd7ZcvsQz1RcuMLObvpMoKj0bCOKNgv11UGI71M8Ng"/>
+<div class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-4xl">add_circle</span>
+</div>
+</div>
+<div class="p-3 flex-1 flex flex-col">
+<h3 class="font-mono-data text-mono-data font-semibold text-on-surface line-clamp-2 mb-1">Solar Max 400W Monocrystalline</h3>
+<p class="text-xs text-outline mb-2">SKU: SM-400-M</p>
+<div class="mt-auto flex justify-between items-end">
+<span class="font-headline-md text-headline-md text-primary">$210.00</span>
+<span class="text-xs text-secondary-container bg-secondary/10 px-2 py-1 rounded font-medium">45 in stock</span>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer flex flex-col group opacity-70 grayscale">
+<div class="h-32 bg-surface-container flex items-center justify-center p-4 relative">
+<img class="w-full h-full object-contain mix-blend-multiply" data-alt="A robust, tower-style Uninterruptible Power Supply (UPS) unit. It has a matte black finish with a small LCD screen on the front panel showing green digital readouts. The setting is a sterile, bright studio environment, focusing on technical reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAk_v5ieyH46YvNDHqU5qX-8EgVtSI77eJ58ZvX57yQdgytZhXXkwxdAs-TEYXKacjQ53hTbVXD9omJazNcaFBojMsgKbmjRfY0DdQp5EHd8wk9VWsv-Twxu7O-SHD9Tk-D4mhSFA954m7s_YW5qAmwXIwIRRLztU84DInWb_YQe4C_RroKiN2GbytbhuuH9iQKXEgIJZHtjTUDM18Yta1PSUfU3D6HDQrNOZMxPFIP_5q7vq-BmmujDA"/>
+<div class="absolute inset-0 bg-surface/50 flex items-center justify-center">
+<span class="bg-error text-on-error px-3 py-1 rounded-full text-xs font-bold">Out of Stock</span>
+</div>
+</div>
+<div class="p-3 flex-1 flex flex-col">
+<h3 class="font-mono-data text-mono-data font-semibold text-on-surface line-clamp-2 mb-1">ProPower UPS 1500VA</h3>
+<p class="text-xs text-outline mb-2">SKU: PP-1500-U</p>
+<div class="mt-auto flex justify-between items-end">
+<span class="font-headline-md text-headline-md text-primary">$350.00</span>
+<span class="text-xs text-error bg-error-container px-2 py-1 rounded font-medium">0 in stock</span>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer flex flex-col group">
+<div class="h-32 bg-surface-container flex items-center justify-center p-4 relative">
+<img class="w-full h-full object-contain mix-blend-multiply" data-alt="A compact, deep cycle marine battery. It features a rugged dark blue casing with dual terminals and a sturdy carrying handle. The lighting is crisp and clear, designed for a modern e-commerce or point-of-sale interface, highlighting the product's durability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo-RVx7dqI8pg7CzmIKr6J7JWXi3v_CcScoiDwGw3mkiVeDaI0-QcegW6xGo1qDYE07jwEkwyeB-ExWGW-OybUpMQyVtvpSiz-jeUj68PllCMq82XWqxtjc2InCU4zZaQHAVrJpa9RL1bAfPIWmZEJi20c1XwnJQnw7fPmrAYNC9kiDFs_kz1rbpBZlwLGmL9qaEdGJgyVI0_BLJpWK_xJnmv6p0R2i-NgskYGYTzFV4X-tJuQOR7jVA"/>
+<div class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-4xl">add_circle</span>
+</div>
+</div>
+<div class="p-3 flex-1 flex flex-col">
+<h3 class="font-mono-data text-mono-data font-semibold text-on-surface line-clamp-2 mb-1">Deep Cycle Marine 100Ah</h3>
+<p class="text-xs text-outline mb-2">SKU: DC-M100</p>
+<div class="mt-auto flex justify-between items-end">
+<span class="font-headline-md text-headline-md text-primary">$189.50</span>
+<span class="text-xs text-secondary-container bg-secondary/10 px-2 py-1 rounded font-medium">8 in stock</span>
+</div>
+</div>
+</div>
+<!-- Product Card 5 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer flex flex-col group">
+<div class="h-32 bg-surface-container flex items-center justify-center p-4 relative">
+<span class="material-symbols-outlined text-6xl text-outline-variant">cable</span>
+<div class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-4xl">add_circle</span>
+</div>
+</div>
+<div class="p-3 flex-1 flex flex-col">
+<h3 class="font-mono-data text-mono-data font-semibold text-on-surface line-clamp-2 mb-1">Heavy Duty Jumper Cables 4-Gauge</h3>
+<p class="text-xs text-outline mb-2">SKU: ACC-JC4G</p>
+<div class="mt-auto flex justify-between items-end">
+<span class="font-headline-md text-headline-md text-primary">$45.00</span>
+<span class="text-xs text-secondary-container bg-secondary/10 px-2 py-1 rounded font-medium">100+ in stock</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Cart Panel -->
+<aside class="w-96 bg-surface-container-lowest border-l border-outline-variant/20 flex flex-col h-full shadow-lg z-10">
+<!-- Cart Header -->
+<div class="p-4 border-b border-outline-variant/20 flex justify-between items-center bg-surface-container-low">
+<h2 class="font-headline-md text-headline-md font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">shopping_cart</span>
+                        Current Order
+                    </h2>
+<span class="bg-primary text-on-primary text-xs px-2 py-1 rounded-full font-bold">3 Items</span>
+</div>
+<!-- Customer Info -->
+<div class="p-4 border-b border-outline-variant/20">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm font-semibold text-on-surface">Walk-in Customer</span>
+<button class="text-primary hover:underline text-xs flex items-center">
+<span class="material-symbols-outlined text-sm mr-1">person_add</span> Add
+                        </button>
+</div>
+</div>
+<!-- Cart Items List -->
+<div class="flex-1 overflow-y-auto p-2 space-y-2">
+<!-- Cart Item 1 -->
+<div class="p-3 bg-surface rounded-lg border border-outline-variant/30 flex flex-col gap-2 relative group">
+<button class="absolute top-2 right-2 text-outline hover:text-error opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+<div class="flex justify-between items-start pr-6">
+<h4 class="font-mono-data text-mono-data text-sm font-semibold text-on-surface">DM Auto Premium 12V 70Ah</h4>
+<span class="font-semibold text-primary">$145.00</span>
+</div>
+<div class="flex justify-between items-center mt-1">
+<div class="flex items-center bg-surface-container rounded-full border border-outline-variant/50 overflow-hidden">
+<button class="w-8 h-8 flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors">-</button>
+<span class="w-8 text-center text-sm font-mono-data">1</span>
+<button class="w-8 h-8 flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors">+</button>
+</div>
+<span class="text-sm font-bold text-on-surface">$145.00</span>
+</div>
+</div>
+<!-- Cart Item 2 -->
+<div class="p-3 bg-surface rounded-lg border border-outline-variant/30 flex flex-col gap-2 relative group">
+<button class="absolute top-2 right-2 text-outline hover:text-error opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+<div class="flex justify-between items-start pr-6">
+<h4 class="font-mono-data text-mono-data text-sm font-semibold text-on-surface">Deep Cycle Marine 100Ah</h4>
+<span class="font-semibold text-primary">$189.50</span>
+</div>
+<div class="flex justify-between items-center mt-1">
+<div class="flex items-center bg-surface-container rounded-full border border-outline-variant/50 overflow-hidden">
+<button class="w-8 h-8 flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors">-</button>
+<span class="w-8 text-center text-sm font-mono-data">2</span>
+<button class="w-8 h-8 flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors">+</button>
+</div>
+<span class="text-sm font-bold text-on-surface">$379.00</span>
+</div>
+</div>
+</div>
+<!-- Totals & Checkout -->
+<div class="p-4 bg-surface-container-low border-t border-outline-variant/20 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+<div class="space-y-2 mb-4">
+<div class="flex justify-between text-sm text-on-surface-variant">
+<span>Subtotal</span>
+<span class="font-mono-data">$524.00</span>
+</div>
+<div class="flex justify-between text-sm text-on-surface-variant">
+<span>Tax (8.5%)</span>
+<span class="font-mono-data">$44.54</span>
+</div>
+<div class="flex justify-between text-sm text-on-surface-variant text-secondary">
+<span>Discount</span>
+<button class="hover:underline flex items-center text-xs"><span class="material-symbols-outlined text-xs mr-1">sell</span> Add</button>
+</div>
+<div class="pt-2 mt-2 border-t border-outline-variant/30 flex justify-between items-center">
+<span class="text-lg font-bold text-on-surface">Grand Total</span>
+<span class="text-2xl font-bold text-primary font-mono-data">$568.54</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 mb-2">
+<button class="py-2 px-4 bg-surface border border-outline-variant text-on-surface rounded flex items-center justify-center gap-2 hover:bg-surface-variant transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-base">pause_circle</span> Hold
+                        </button>
+<button class="py-2 px-4 bg-surface border border-outline-variant text-error rounded flex items-center justify-center gap-2 hover:bg-error-container transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-base">delete</span> Void
+                        </button>
+</div>
+<button class="w-full py-4 bg-primary text-on-primary rounded-lg font-bold text-lg flex items-center justify-center gap-2 hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-md active:scale-95 duration-200">
+<span class="material-symbols-outlined">point_of_sale</span>
+                        Checkout
+                    </button>
+</div>
+</aside>
+</div>
+</main>
+</body></html>

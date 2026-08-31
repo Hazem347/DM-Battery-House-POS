@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DM Battery House - Inventory</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface": "#f7f9ff",
+                      "on-primary-container": "#8ebdf9",
+                      "surface-bright": "#f7f9ff",
+                      "on-primary-fixed-variant": "#07497d",
+                      "error": "#ba1a1a",
+                      "primary-fixed": "#d2e4ff",
+                      "on-error": "#ffffff",
+                      "outline": "#727780",
+                      "outline-variant": "#c2c7d1",
+                      "on-surface": "#091d2e",
+                      "tertiary-container": "#6a4100",
+                      "on-background": "#091d2e",
+                      "on-secondary-fixed-variant": "#005228",
+                      "error-container": "#ffdad6",
+                      "surface-container": "#e3efff",
+                      "on-tertiary-fixed-variant": "#663e00",
+                      "surface-variant": "#d1e4fb",
+                      "secondary": "#006d37",
+                      "on-tertiary-fixed": "#2b1700",
+                      "tertiary": "#4b2d00",
+                      "secondary-fixed-dim": "#4ae183",
+                      "tertiary-fixed": "#ffddb9",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary-container": "#ffa725",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-primary": "#a0c9ff",
+                      "background": "#f7f9ff",
+                      "inverse-on-surface": "#e8f2ff",
+                      "surface-container-highest": "#d1e4fb",
+                      "on-primary-fixed": "#001c37",
+                      "primary-fixed-dim": "#a0c9ff",
+                      "on-secondary-fixed": "#00210c",
+                      "surface-container-low": "#edf4ff",
+                      "on-surface-variant": "#42474f",
+                      "surface-tint": "#2d6197",
+                      "on-secondary-container": "#00743a",
+                      "on-primary": "#ffffff",
+                      "secondary-container": "#6bfe9c",
+                      "inverse-surface": "#203243",
+                      "surface-dim": "#c9dcf3",
+                      "on-tertiary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "primary-container": "#0f4c81",
+                      "primary": "#00355f",
+                      "surface-container-high": "#d9eaff",
+                      "secondary-fixed": "#6bfe9c",
+                      "tertiary-fixed-dim": "#ffb961",
+                      "accent-orange": "#F39C12"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-max": "1280px",
+                      "margin-desktop": "48px",
+                      "gutter": "24px",
+                      "base": "8px",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "label-sm": ["Inter"],
+                      "display-lg": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "mono-data": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "display-lg-mobile": ["Inter"],
+                      "body-md": ["Inter"]
+              },
+              "fontSize": {
+                      "label-sm": ["13px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased h-screen overflow-hidden flex">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-screen w-64 bg-surface-container-low dark:bg-surface-container-lowest border-r border-outline-variant/20 z-40 hidden md:flex flex-col p-base space-y-2">
+<div class="px-4 py-6 mb-4">
+<h1 class="font-headline-md text-headline-md font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="battery_charging_full" data-weight="fill">battery_charging_full</span>
+                DM Battery House
+            </h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1 px-1">Admin Panel</p>
+</div>
+<div class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all active:translate-x-1 duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors" data-icon="dashboard">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold transition-all active:translate-x-1 duration-150 group shadow-[0_4px_14px_0_rgba(107,254,156,0.2)]" href="#">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="inventory_2" data-weight="fill">inventory_2</span>
+<span class="font-label-sm text-label-sm">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all active:translate-x-1 duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors" data-icon="point_of_sale">point_of_sale</span>
+<span class="font-label-sm text-label-sm">POS</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all active:translate-x-1 duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors" data-icon="analytics">analytics</span>
+<span class="font-label-sm text-label-sm">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all active:translate-x-1 duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors" data-icon="settings">settings</span>
+<span class="font-label-sm text-label-sm">Management</span>
+</a>
+</div>
+<div class="mt-auto space-y-1 pt-4 border-t border-outline-variant/20">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all active:translate-x-1 duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors" data-icon="help">help</span>
+<span class="font-label-sm text-label-sm">Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-error hover:bg-error-container/50 rounded-lg transition-all active:translate-x-1 duration-150 group" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-sm text-label-sm">Logout</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col md:ml-64 w-full h-full overflow-hidden bg-background">
+<!-- TopNavBar (Dashboard Context) -->
+<header class="sticky top-0 w-full z-40 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md border-b border-outline-variant/20 h-16 flex justify-between items-center px-gutter shrink-0">
+<div class="flex items-center gap-4 w-1/2">
+<div class="relative w-full max-w-md hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant/50 rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-fixed/50 transition-all placeholder:text-outline/70" placeholder="Search inventory by SKU, name..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-variant/40 rounded-full active:scale-90 transition-transform relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-accent-orange rounded-full border-2 border-surface"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-variant/40 rounded-full active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="apps">apps</span>
+</button>
+<div class="h-8 w-px bg-outline-variant/30 mx-2"></div>
+<button class="flex items-center gap-2 p-1 pl-2 pr-3 hover:bg-surface-container-high rounded-full transition-colors border border-transparent hover:border-outline-variant/30">
+<img class="w-8 h-8 rounded-full object-cover bg-surface-variant" data-alt="A professional headshot of an administrator in a modern office setting. Clean lighting, subtle depth of field. High-quality corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXFG_B7tBZnmV3_Zq8kPg1h5q0S0yL0l4XymxtXTiP8qXEk-7zk_BrhazXUKV2Vv_uksbIae0Fk9PWvH5nP4dKnn-6oF4JZbBAt9eRfJIqko_unpfsFHX0xlClWuANEM4myD-gRt7NfgxWsbFYru1fY_-04Uosg9UnWSaLUemUfdcrNAJXpCCFYms2JPNlVZdRasQ2ciGW3W7TvLbjTtIIFJJDyVm3UI8jkFMzWDhLdJmmTESrLKnWfA"/>
+<span class="font-label-sm text-label-sm text-on-surface hidden sm:block">Admin</span>
+</button>
+</div>
+</header>
+<!-- Page Content -->
+<div class="flex-1 overflow-auto p-margin-mobile md:p-gutter">
+<div class="max-w-[1600px] mx-auto space-y-6">
+<!-- Page Header & Actions -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<div>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface">Inventory Management</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Manage stock levels, pricing, and product details.</p>
+</div>
+<div class="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+<button class="flex items-center gap-2 px-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg font-label-sm text-label-sm text-on-surface hover:bg-surface-container-low transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]" data-icon="filter_list">filter_list</span>
+                            Filter
+                        </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg font-label-sm text-label-sm text-on-surface hover:bg-surface-container-low transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span>
+                            Bulk Export
+                        </button>
+<button class="flex items-center gap-2 px-5 py-2 bg-primary text-on-primary rounded-lg font-label-sm text-label-sm hover:bg-primary/90 transition-colors shadow-[0_4px_12px_rgba(0,53,95,0.2)]">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+                            Add Product
+                        </button>
+</div>
+</div>
+<!-- Stats Overview Bento -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-surface-container-highest flex items-center justify-between">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Total Products</p>
+<p class="font-headline-md text-headline-md font-bold text-on-surface">1,248</p>
+</div>
+<div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed">
+<span class="material-symbols-outlined" data-icon="category">category</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-surface-container-highest flex items-center justify-between">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Low Stock Alerts</p>
+<p class="font-headline-md text-headline-md font-bold text-[var(--tw-colors-accent-orange)]">24</p>
+</div>
+<div class="w-12 h-12 rounded-full bg-[#fef5e7] flex items-center justify-center text-[var(--tw-colors-accent-orange)]">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-surface-container-highest flex items-center justify-between">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Out of Stock</p>
+<p class="font-headline-md text-headline-md font-bold text-error">5</p>
+</div>
+<div class="w-12 h-12 rounded-full bg-error-container flex items-center justify-center text-on-error-container">
+<span class="material-symbols-outlined" data-icon="error">error</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-surface-container-highest flex items-center justify-between">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Total Value</p>
+<p class="font-headline-md text-headline-md font-bold text-secondary">$142.5k</p>
+</div>
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</div>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-surface-container-lowest rounded-xl border border-surface-container-highest overflow-hidden shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-surface-container-highest font-label-sm text-label-sm text-on-surface-variant">
+<th class="p-4 font-semibold whitespace-nowrap">Product</th>
+<th class="p-4 font-semibold whitespace-nowrap">SKU</th>
+<th class="p-4 font-semibold whitespace-nowrap">Category</th>
+<th class="p-4 font-semibold whitespace-nowrap text-right">Unit Price</th>
+<th class="p-4 font-semibold whitespace-nowrap text-right">Stock</th>
+<th class="p-4 font-semibold whitespace-nowrap">Status</th>
+<th class="p-4 font-semibold whitespace-nowrap text-center">Actions</th>
+</tr>
+</thead>
+<tbody class="font-mono-data text-mono-data text-on-surface divide-y divide-surface-container-highest">
+<!-- Row 1 (Normal) -->
+<tr class="hover:bg-surface-container/30 transition-colors group">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded border border-outline-variant/30 bg-surface-container overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A clean, studio shot of an automotive 12V lead-acid battery against a white background. Technical product photography, high resolution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbtoOMWSIElsbBNl9FFKojhYeNjRFU8HTEDTYU6fuaogannEURmtbO4GcG2Ci3ugcY24IMScEjZnZSgNSjnN0jjgb96TVGNB9K_frRydvtSENs5BLC-gr_-N3qsQ72BcJZcsuWmsznezgTPTTwDojv_5fW-vlMVs18hQbDCZST9-M1U7R4Mgl749ldWCN6PzZy0he6sYXzDZHjEet7DW5tTFR-P0x41pJ_wDJZpX-2_UVwRINj2IwCrQ"/>
+</div>
+<div class="font-body-md text-body-md font-medium">Auto Start Pro 12V</div>
+</div>
+</td>
+<td class="p-4 text-on-surface-variant">BAT-A-1029</td>
+<td class="p-4 text-on-surface-variant">Automotive</td>
+<td class="p-4 text-right font-medium">$129.99</td>
+<td class="p-4 text-right font-medium">145</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container/50 text-on-secondary-container font-label-sm text-[11px] border border-secondary-container">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                                            In Stock
+                                        </span>
+</td>
+<td class="p-4 text-center">
+<button class="text-on-surface-variant hover:text-primary p-1 rounded transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 (Low Stock Warning) -->
+<tr class="bg-[#fef5e7]/30 hover:bg-[#fef5e7]/60 transition-colors group">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded border border-outline-variant/30 bg-surface-container overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A sleek, modern solar power storage battery unit, tall rectangular design, matte white finish. Studio lighting, isolated on a light gray background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb0WLeM5_6khFndiPDR8xyE5Hdtorkjyy3Fsw4Qc8w_6P-wgoRZxuKPzH0EDoqqAJk7EhJUN7YHD13I1Lay3cCDDsVDLXqioXzJ8pBaMkjpZJHsoOR1yeXCS-4hzdSJndBCEHj6bkaZH9y4AUVvTjVrLoreB5jcr9ztQGNSw6wFsX1nItsOw0-jlwY0rzr1gSaGpQYLnAOEaC5G7IIsBYoX0NR_VSx0_EKXX9m49rfDRYMCFN9gz7cUQ"/>
+</div>
+<div class="font-body-md text-body-md font-medium text-on-surface">Solar Max Cell 5kW</div>
+</div>
+</td>
+<td class="p-4 text-on-surface-variant">SOL-M-5001</td>
+<td class="p-4 text-on-surface-variant">Solar Storage</td>
+<td class="p-4 text-right font-medium">$899.00</td>
+<td class="p-4 text-right font-bold text-[var(--tw-colors-accent-orange)]">8</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#fef5e7] text-[var(--tw-colors-accent-orange)] font-label-sm text-[11px] border border-[#fbdcb0]">
+<span class="w-1.5 h-1.5 rounded-full bg-[var(--tw-colors-accent-orange)] animate-pulse"></span>
+                                            Low Stock
+                                        </span>
+</td>
+<td class="p-4 text-center">
+<button class="text-on-surface-variant hover:text-primary p-1 rounded transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 (Normal) -->
+<tr class="hover:bg-surface-container/30 transition-colors group">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded border border-outline-variant/30 bg-surface-container overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close up of a heavy duty marine deep cycle battery with top terminals. Industrial setting lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXjp8G1atMmE2JUhoO0yr4pCC_wVeIl4FJUk32WQtYidLl-oXLdEgNYx_VlvCgXBlVlZnZzcMRsxNJZVMw2C7KyX8CYaHxqJjXUFHZv13LeMUjd2hd0EO4nDgqp51I2DnPm_JlVCvbZ0WJhKDD56vxp37UJKZHqepnJxjALPL5rve0afQ9dbmqZnAyfAf1AyZ6SiGBVAKnwg0MoMt5xQ_KKiZ45R7cvI3-Ebhf-leVSXdJMvpOzLjkRw"/>
+</div>
+<div class="font-body-md text-body-md font-medium">Marine Deep Cycle V2</div>
+</div>
+</td>
+<td class="p-4 text-on-surface-variant">MAR-D-8820</td>
+<td class="p-4 text-on-surface-variant">Marine</td>
+<td class="p-4 text-right font-medium">$215.50</td>
+<td class="p-4 text-right font-medium">42</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container/50 text-on-secondary-container font-label-sm text-[11px] border border-secondary-container">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                                            In Stock
+                                        </span>
+</td>
+<td class="p-4 text-center">
+<button class="text-on-surface-variant hover:text-primary p-1 rounded transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 (Out of Stock) -->
+<tr class="bg-error-container/10 hover:bg-error-container/20 transition-colors group">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded border border-outline-variant/30 bg-surface-container overflow-hidden shrink-0 opacity-60 grayscale">
+<img class="w-full h-full object-cover" data-alt="A standard uninterruptible power supply (UPS) replacement battery cartridge. Neutral lighting, clean technical photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5ivLuWa4RG6SkpB048hIfVgRmmkwCJcdKak48D1oFhhNc728nEzzyqW_L0MrFkLXykStvPkXF0O0qmDZ9KnfvdiDSSwIMawg2U5NkIZa1fmMJPaYNiXTi5BU6i8Ws4O3UVrr3RXU2-jsGdGhKQxRZQkPAewgqXki_yg0_EioNor9G6GHU9e0ggCzvnbhZNm9f8s8WI-mehdz8B_EGAvfxPXC7xMiOuwWPhYDZClEa1LbLSi5w1aCgzA"/>
+</div>
+<div class="font-body-md text-body-md font-medium text-on-surface-variant">UPS Backup Cartridge 12V 7Ah</div>
+</div>
+</td>
+<td class="p-4 text-on-surface-variant">UPS-C-1207</td>
+<td class="p-4 text-on-surface-variant">Industrial UPS</td>
+<td class="p-4 text-right font-medium text-on-surface-variant">$35.00</td>
+<td class="p-4 text-right font-bold text-error">0</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-error-container/50 text-on-error-container font-label-sm text-[11px] border border-error-container">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                                            Reorder
+                                        </span>
+</td>
+<td class="p-4 text-center">
+<button class="text-on-surface-variant hover:text-primary p-1 rounded transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5 (Normal) -->
+<tr class="hover:bg-surface-container/30 transition-colors group">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded border border-outline-variant/30 bg-surface-container overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A pair of heavy duty brass battery terminals with red and black protective covers. High detailed product photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGFZf9q6tVaNo_KsKd7hE8J1x8wivzXTks6uvZ7bZLQJ2SAc2koICGh69mE39VUYkM5u7tmFyCZ3srhSbx4Y3jGze8xy_5BFj3lrafYJRm_9cf85ad03eRJh2W70UP8ytdqWikQQZ91mLck0ZlZTypkY_VEYiPWMRzrFTH5VM3aEia4e2S8rYu2vmZ4yP_pNwaqWciLfaKe1h14YTajRjE8joIaI2hxkT-EoupbthvXwXNGs96WjjZEQ"/>
+</div>
+<div class="font-body-md text-body-md font-medium">Heavy Duty Terminal Kit</div>
+</div>
+</td>
+<td class="p-4 text-on-surface-variant">ACC-T-004</td>
+<td class="p-4 text-on-surface-variant">Accessories</td>
+<td class="p-4 text-right font-medium">$12.99</td>
+<td class="p-4 text-right font-medium">350</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container/50 text-on-secondary-container font-label-sm text-[11px] border border-secondary-container">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                                            In Stock
+                                        </span>
+</td>
+<td class="p-4 text-center">
+<button class="text-on-surface-variant hover:text-primary p-1 rounded transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="border-t border-surface-container-highest p-4 flex items-center justify-between bg-surface-container-lowest">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Showing 1 to 5 of 1,248 entries</span>
+<div class="flex items-center gap-1">
+<button class="p-1 text-outline-variant hover:text-primary transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-on-primary font-label-sm text-label-sm">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container text-on-surface-variant font-label-sm text-label-sm transition-colors">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container text-on-surface-variant font-label-sm text-label-sm transition-colors">3</button>
+<span class="px-2 text-on-surface-variant">...</span>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container text-on-surface-variant font-label-sm text-label-sm transition-colors">250</button>
+<button class="p-1 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

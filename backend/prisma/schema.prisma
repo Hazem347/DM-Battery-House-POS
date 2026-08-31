@@ -1,0 +1,184 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("CASHIER") // ADMIN, MANAGER, CASHIER
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  sales     Sale[]
+}
+
+model Category {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  description String?   
+  products    Product[]
+}
+
+model Brand {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  description String?   
+  products    Product[]
+}
+
+model Product {
+  id                Int       @id @default(autoincrement())
+  name              String
+  sku               String    @unique
+  barcode           String?   @unique
+  description       String?   
+  capacity          String?   // e.g., "100Ah"
+  voltage           String?   // e.g., "12V"
+  warranty          String?
+  purchasePrice     Float
+  salePrice         Float
+  minStockLevel     Int       @default(5)
+  images            String?   // JSON string or comma-separated URLs
+  status            String    @default("ACTIVE") // ACTIVE, INACTIVE
+  categoryId        Int?
+  brandId           Int?
+  
+  category          Category? @relation(fields: [categoryId], references: [id])
+  brand             Brand?    @relation(fields: [brandId], references: [id])
+  inventory         Inventory?
+  inventoryHistory  InventoryHistory[]
+  saleItems         SaleItem[]
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
+
+model Inventory {
+  id          Int      @id @default(autoincrement())
+  productId   Int      @unique
+  quantity    Int      @default(0)
+  lastUpdated DateTime @default(now())
+  
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model InventoryHistory {
+  id          Int      @id @default(autoincrement())
+  productId   Int
+  action      String   // STOCK_IN, STOCK_OUT, ADJUSTMENT, SALE
+  quantity    Int      // Positive for in, negative for out
+  reference   String?  // e.g., Receipt number or PO number
+  notes       String?  
+  createdAt   DateTime @default(now())
+  
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Customer {
+  id            Int      @id @default(autoincrement())
+  name          String
+  email         String?  @unique
+  phoneNumber   String?  @unique
+  address       String?  
+  createdAt     DateTime @default(now())
+  
+  sales         Sale[]
+}
+
+model Sale {
+  id            Int      @id @default(autoincrement())
+  receiptNumber String   @unique
+  totalAmount   Float  
+  discount      Float  @default(0.00) 
+  tax           Float  @default(0.00) 
+  finalAmount   Float  
+  paymentMethod String   // CASH, CARD, MIXED
+  amountPaid    Float  
+  changeAmount  Float  @default(0.00) 
+  userId        Int
+  customerId    Int?
+  
+  user          User      @relation(fields: [userId], references: [id])
+  customer      Customer? @relation(fields: [customerId], references: [id])
+  saleItems     SaleItem[]
+  
+  createdAt     DateTime  @default(now())
+}
+
+model SaleItem {
+  id          Int      @id @default(autoincrement())
+  saleId      Int
+  productId   Int
+  quantity    Int
+  unitPrice   Float  
+  totalPrice  Float  
+  
+  sale        Sale     @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  product     Product  @relation(fields: [productId], references: [id])
+}
+
+model Inquiry {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String
+  subject     String?
+  message     String   
+  status      String   @default("NEW") // NEW, READ, REPLIED
+  createdAt   DateTime @default(now())
+}
+
+model ActivityLog {
+  id          Int      @id @default(autoincrement())
+  userId      Int?
+  action      String
+  details     String?  
+  ipAddress   String?
+  createdAt   DateTime @default(now())
+}
+
+model Supplier {
+  id          Int      @id @default(autoincrement())
+  name        String
+  contactName String?
+  email       String?
+  phone       String?
+  address     String?
+  status      String   @default("ACTIVE")
+  createdAt   DateTime @default(now())
+  
+  purchaseOrders PurchaseOrder[]
+}
+
+model PurchaseOrder {
+  id          Int      @id @default(autoincrement())
+  poNumber    String   @unique
+  supplierId  Int
+  totalAmount Float
+  status      String   @default("PENDING") // PENDING, RECEIVED, CANCELLED
+  createdAt   DateTime @default(now())
+  
+  supplier    Supplier @relation(fields: [supplierId], references: [id])
+}
+
+model SystemSettings {
+  id          Int      @id @default(autoincrement())
+  key         String   @unique
+  value       String
+  description String?
+  updatedAt   DateTime @updatedAt
+}
+
+model PasswordResetToken {
+  id        Int      @id @default(autoincrement())
+  email     String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}

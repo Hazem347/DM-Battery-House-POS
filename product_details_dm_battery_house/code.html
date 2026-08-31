@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DM Battery House - Product Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#f7f9ff",
+                    "on-primary-container": "#8ebdf9",
+                    "surface-bright": "#f7f9ff",
+                    "on-primary-fixed-variant": "#07497d",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#d2e4ff",
+                    "on-error": "#ffffff",
+                    "outline": "#727780",
+                    "outline-variant": "#c2c7d1",
+                    "on-surface": "#091d2e",
+                    "tertiary-container": "#6a4100",
+                    "on-background": "#091d2e",
+                    "on-secondary-fixed-variant": "#005228",
+                    "error-container": "#ffdad6",
+                    "surface-container": "#e3efff",
+                    "on-tertiary-fixed-variant": "#663e00",
+                    "surface-variant": "#d1e4fb",
+                    "secondary": "#006d37",
+                    "on-tertiary-fixed": "#2b1700",
+                    "tertiary": "#4b2d00",
+                    "secondary-fixed-dim": "#4ae183",
+                    "tertiary-fixed": "#ffddb9",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-container": "#ffa725",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-primary": "#a0c9ff",
+                    "background": "#f7f9ff",
+                    "inverse-on-surface": "#e8f2ff",
+                    "surface-container-highest": "#d1e4fb",
+                    "on-primary-fixed": "#001c37",
+                    "primary-fixed-dim": "#a0c9ff",
+                    "on-secondary-fixed": "#00210c",
+                    "surface-container-low": "#edf4ff",
+                    "on-surface-variant": "#42474f",
+                    "surface-tint": "#2d6197",
+                    "on-secondary-container": "#00743a",
+                    "on-primary": "#ffffff",
+                    "secondary-container": "#6bfe9c",
+                    "inverse-surface": "#203243",
+                    "surface-dim": "#c9dcf3",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "primary-container": "#0f4c81",
+                    "primary": "#00355f",
+                    "surface-container-high": "#d9eaff",
+                    "secondary-fixed": "#6bfe9c",
+                    "tertiary-fixed-dim": "#ffb961"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1280px",
+                    "margin-desktop": "48px",
+                    "gutter": "24px",
+                    "base": "8px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "label-sm": [
+                            "Inter"
+                    ],
+                    "display-lg": [
+                            "Inter"
+                    ],
+                    "body-lg": [
+                            "Inter"
+                    ],
+                    "mono-data": [
+                            "Inter"
+                    ],
+                    "headline-md": [
+                            "Inter"
+                    ],
+                    "display-lg-mobile": [
+                            "Inter"
+                    ],
+                    "body-md": [
+                            "Inter"
+                    ]
+            },
+            "fontSize": {
+                    "label-sm": [
+                            "13px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "display-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "mono-data": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "display-lg-mobile": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+<!-- Top Navigation -->
+<nav class="fixed top-0 w-full z-50 backdrop-blur-xl bg-surface/70 border-b border-outline-variant/30 shadow-sm flex justify-between items-center h-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto left-0 right-0">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">battery_charging_full</span>
+<span class="font-headline-md text-headline-md font-bold text-primary">DM Battery House</span>
+</div>
+<div class="hidden md:flex gap-8">
+<a class="text-primary border-b-2 border-primary font-bold pb-1 font-body-md text-body-md" href="#">Products</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">About</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Contact</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">search</button>
+<button class="bg-primary text-on-primary font-label-sm text-label-sm px-4 py-2 rounded hover:bg-primary-container hover:text-on-primary-container transition-colors active:scale-95 duration-200">Sign In</button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow pt-24 pb-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full">
+<!-- Breadcrumb -->
+<div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm mb-6">
+<a class="hover:text-primary" href="#">Home</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<a class="hover:text-primary" href="#">Automotive</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-on-background font-semibold">ProPower 12V 70Ah</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Product Gallery Section -->
+<div class="lg:col-span-7 flex flex-col gap-4">
+<div class="bg-surface-container-lowest rounded-xl p-8 border border-outline-variant/20 flex items-center justify-center min-h-[400px] relative overflow-hidden group">
+<!-- Subtle background glow -->
+<div class="absolute inset-0 bg-gradient-to-tr from-surface-container-low to-surface-container-highest opacity-50"></div>
+<img class="w-full h-auto object-contain max-h-[500px] relative z-10 transition-transform duration-500 group-hover:scale-105" data-alt="A high-resolution, studio-lit photograph of a heavy-duty automotive battery. The battery is sleek black with vibrant deep blue and bright green branding labels indicating 'ProPower 12V 70Ah'. The lighting is crisp and technical, highlighting the textured plastic casing and metallic terminals against a pristine white background. The aesthetic conveys reliable energy, modern industrial design, and technical precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCctDtyA7G2Sx0Q2i2hTaP-kn-97yvfKvBtn1x32NOIejR16UlqE2Y-dT0-DesMj71wYeeKKFB3ML5HrSTjssBhLODbZQgdiGrDi0dpmtlKFO41wuZQvjnjSLYmbbvrq3xs_qRCAw1E4BMjcFlFT-jnn-hqjZH5pHrMOHVqTrbOxc-4NoW1k66w6cUO9J4NCgvua1FdBZkKeoJjTuIBS1cVs1g_f31RXqqQlcI5EQ_2LMR5gGLMY89DLQ"/>
+</div>
+<!-- Thumbnails -->
+<div class="grid grid-cols-4 gap-4">
+<div class="bg-surface-container-lowest rounded-lg p-2 border-2 border-primary cursor-pointer h-24 flex items-center justify-center">
+<img class="h-full object-contain" data-alt="A close-up photograph focusing on the positive terminal of a modern automotive battery. The terminal is clean, shiny metal, surrounded by dark grey textured plastic. A small red plastic cap is visible nearby. The lighting is bright and analytical, emphasizing the robust build quality and technical nature of the product." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_gMTMjxZHAkmtR2FsM_PFfZVgJdKhPN6908MlZwY0fBx25rIyaRcpptcmkav6zYBHuPVGcrNlNo_RGHGubU52rOAaiDAarbbiiFFc7axC0kHHQ3LPFn9a2_amtTu-B7aI0AlVAk62xnpspjrOT-cPcLW4ywgHKCyxvgOjD3TcBM-rTXwYUOXrcV68pR7J87xpsqKC0rkgBMf4xKxXQ1FK5Kd4GJCxXQKhDW4_WwNgRHqb4Fja2OkAYA"/>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-2 border border-outline-variant/30 cursor-pointer h-24 flex items-center justify-center hover:border-primary/50 transition-colors">
+<img class="h-full object-contain" data-alt="A macro photograph showing the technical specification label on the side of a heavy-duty battery. The label features crisp typography detailing voltage, capacity, and safety warnings in deep blue and green accents. The background is a slightly out-of-focus black plastic casing. The image emphasizes transparency and technical accuracy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3lK6wBKVkNOa-LBIDgHyQqou4LOsF0OpxTr0-vdZTUdhgQZ2St6MIb05IEfFl7uDoY3aOXvorrJBhz4yqZMeZeyuz_54YwPfibBtaDAmS4S6MowNlnUsKKTsl5qR8A6iCWsiY6EreBjl11AM5NpibcwUKrzBKs-rYGAQNvxBj3DNPd9id4w--vZkhRGW9eNfzwReN0GOqFOEOTHiDWlwQJvjA_NeFIW6pbdmk5DXnkwstCL9GxNEZuA"/>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-2 border border-outline-variant/30 cursor-pointer h-24 flex items-center justify-center hover:border-primary/50 transition-colors">
+<img class="h-full object-contain" data-alt="A lifestyle-style product shot showing a modern car battery installed cleanly within the engine bay of a contemporary vehicle. The engine bay is immaculate, and the battery stands out with its blue and green branding. The lighting is natural but refined, suggesting reliability and seamless integration into modern automotive systems." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjf8m-dY1wmb4bZ62a3-4iKp7XIZwTaoaERvyCxlVWCCz6yzY5v1joutt-P5Hz0Kib25yqNfIev3sLdgEkAUcH4r1oDU_CXsxQwSa7AR7t7NUQ2bUH1qRSbCMmDlWbfpCcLcJX7mYGDO5XCngprRVYOqLP-Sc0aRY702yVAzUlZ3VGhT7c2DGQMymKOrJeAvZSngpqOtmJ0oDOKeXwd-gtwgOqEp0erZ5g9KG4M591_64g-nws_LsnAw"/>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-2 border border-outline-variant/30 cursor-pointer h-24 flex items-center justify-center bg-surface-container-low hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-outline text-3xl">play_circle</span>
+</div>
+</div>
+</div>
+<!-- Product Details Section -->
+<div class="lg:col-span-5 flex flex-col gap-6">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-secondary-container text-on-secondary-container px-2 py-1 rounded font-label-sm text-label-sm inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> In Stock
+                        </span>
+<span class="text-on-surface-variant font-mono-data text-mono-data">SKU: PP-12V70-AUTO</span>
+</div>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-background mb-2">ProPower 12V 70Ah</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">High-performance maintenance-free automotive battery designed for modern vehicles with heavy electrical demands. Ensures reliable starting power in extreme temperatures.</p>
+</div>
+<div class="flex items-baseline gap-4 border-b border-outline-variant/20 pb-6">
+<span class="font-display-lg text-display-lg text-primary font-bold">$145.00</span>
+<span class="font-body-md text-body-md text-on-surface-variant line-through">$160.00</span>
+</div>
+<!-- Technical Specs Mini -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-lowest border border-outline-variant/20 rounded-lg p-4 flex items-center gap-3">
+<div class="bg-surface-container p-2 rounded-full text-primary">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Voltage</div>
+<div class="font-body-md text-body-md font-semibold text-on-background">12V</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/20 rounded-lg p-4 flex items-center gap-3">
+<div class="bg-surface-container p-2 rounded-full text-primary">
+<span class="material-symbols-outlined">battery_charging_full</span>
+</div>
+<div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Capacity</div>
+<div class="font-body-md text-body-md font-semibold text-on-background">70 Ah</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/20 rounded-lg p-4 flex items-center gap-3">
+<div class="bg-surface-container p-2 rounded-full text-primary">
+<span class="material-symbols-outlined">electric_car</span>
+</div>
+<div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">CCA</div>
+<div class="font-body-md text-body-md font-semibold text-on-background">600 A</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/20 rounded-lg p-4 flex items-center gap-3">
+<div class="bg-surface-container p-2 rounded-full text-primary">
+<span class="material-symbols-outlined">verified</span>
+</div>
+<div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Warranty</div>
+<div class="font-body-md text-body-md font-semibold text-on-background">24 Months</div>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col gap-3 mt-4">
+<button class="w-full bg-[#25D366] hover:bg-[#1DA851] text-white font-headline-md text-headline-md py-4 rounded-lg flex items-center justify-center gap-2 transition-colors shadow-sm">
+<svg class="w-6 h-6" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        Contact for Purchase
+                    </button>
+<button class="w-full bg-surface-container-lowest border border-primary text-primary hover:bg-surface-container font-body-md text-body-md py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-lg">download</span>
+                        Download Specifications (PDF)
+                    </button>
+</div>
+<div class="bg-surface-container-low rounded-lg p-4 mt-2 border border-outline-variant/20 flex gap-3 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-primary">local_shipping</span>
+<p>Free professional installation available at our DM Battery House service centers. Same-day delivery available for orders placed before 2 PM.</p>
+</div>
+</div>
+</div>
+<!-- Detailed Specifications Tabbed Area -->
+<div class="mt-16 bg-surface-container-lowest rounded-xl border border-outline-variant/20 overflow-hidden">
+<!-- Tabs -->
+<div class="flex border-b border-outline-variant/20 bg-surface-bright">
+<button class="px-6 py-4 font-headline-md text-headline-md font-bold text-primary border-b-2 border-primary bg-surface-container-low/50">Technical Specifications</button>
+<button class="px-6 py-4 font-headline-md text-headline-md text-on-surface-variant hover:text-primary transition-colors">Compatibility</button>
+<button class="px-6 py-4 font-headline-md text-headline-md text-on-surface-variant hover:text-primary transition-colors">Warranty Info</button>
+</div>
+<!-- Tab Content -->
+<div class="p-8">
+<table class="w-full text-left border-collapse">
+<tbody>
+<tr class="border-b border-outline-variant/10">
+<th class="py-3 font-mono-data text-mono-data text-on-surface-variant w-1/3 font-normal">Nominal Voltage</th>
+<td class="py-3 font-body-md text-body-md text-on-background font-medium">12V</td>
+</tr>
+<tr class="border-b border-outline-variant/10 bg-surface/50">
+<th class="py-3 font-mono-data text-mono-data text-on-surface-variant w-1/3 font-normal">Capacity (C20)</th>
+<td class="py-3 font-body-md text-body-md text-on-background font-medium">70 Ah</td>
+</tr>
+<tr class="border-b border-outline-variant/10">
+<th class="py-3 font-mono-data text-mono-data text-on-surface-variant w-1/3 font-normal">Cold Cranking Amps (CCA)</th>
+<td class="py-3 font-body-md text-body-md text-on-background font-medium">600 A (EN)</td>
+</tr>
+<tr class="border-b border-outline-variant/10 bg-surface/50">
+<th class="py-3 font-mono-data text-mono-data text-on-surface-variant w-1/3 font-normal">Dimensions (L x W x H)</th>
+<td class="py-3 font-body-md text-body-md text-on-background font-medium">278 x 175 x 190 mm</td>
+</tr>
+<tr class="border-b border-outline-variant/10">
+<th class="py-3 font-mono-data text-mono-data text-on-surface-variant w-1/3 font-normal">Weight</th>
+<td class="py-3 font-body-md text-body-md text-on-background font-medium">17.5 kg</td>
+</tr>
+<tr class="border-b border-outline-variant/10 bg-surface/50">
+<th class="py-3 font-mono-data text-mono-data text-on-surface-variant w-1/3 font-normal">Terminal Type</th>
+<td class="py-3 font-body-md text-body-md text-on-background font-medium">Standard Auto Post (A)</td>
+</tr>
+<tr>
+<th class="py-3 font-mono-data text-mono-data text-on-surface-variant w-1/3 font-normal">Layout</th>
+<td class="py-3 font-body-md text-body-md text-on-background font-medium">0 (Positive Right)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 bg-primary dark:bg-surface-container-lowest text-on-primary">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">battery_charging_full</span>
+<span class="font-headline-md text-headline-md text-on-primary font-bold">DM Battery House</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-primary/80">Technical Precision &amp; Reliable Energy.</p>
+</div>
+<div class="flex flex-col gap-3">
+<h4 class="font-label-sm text-label-sm font-bold uppercase tracking-wider text-on-primary/60">Legal</h4>
+<a class="font-label-sm text-label-sm text-on-primary/80 hover:text-white hover:underline transition-all" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-primary/80 hover:text-white hover:underline transition-all" href="#">Terms of Service</a>
+</div>
+<div class="flex flex-col gap-3">
+<h4 class="font-label-sm text-label-sm font-bold uppercase tracking-wider text-on-primary/60">Support</h4>
+<a class="font-label-sm text-label-sm text-on-primary/80 hover:text-white hover:underline transition-all" href="#">Warranty Info</a>
+<a class="font-label-sm text-label-sm text-on-primary/80 hover:text-white hover:underline transition-all" href="#">Store Locator</a>
+</div>
+<div class="flex flex-col gap-3">
+<h4 class="font-label-sm text-label-sm font-bold uppercase tracking-wider text-on-primary/60">Contact</h4>
+<p class="font-label-sm text-label-sm text-on-primary/80 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">mail</span>
+                    sales@dmbattery.com
+                </p>
+<p class="font-label-sm text-label-sm text-on-primary/80 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">phone</span>
+                    +1 (555) 019-2837
+                </p>
+</div>
+</div>
+<div class="mt-12 pt-8 border-t border-on-primary/20 text-center px-margin-mobile md:px-margin-desktop">
+<p class="font-label-sm text-label-sm text-on-primary/60">© 2024 DM Battery House. All rights reserved.</p>
+</div>
+</footer>
+</body></html>

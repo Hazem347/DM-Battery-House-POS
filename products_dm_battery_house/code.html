@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DM Battery House - Product Catalog</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f7f9ff",
+                        "on-primary-container": "#8ebdf9",
+                        "surface-bright": "#f7f9ff",
+                        "on-primary-fixed-variant": "#07497d",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#d2e4ff",
+                        "on-error": "#ffffff",
+                        "outline": "#727780",
+                        "outline-variant": "#c2c7d1",
+                        "on-surface": "#091d2e",
+                        "tertiary-container": "#6a4100",
+                        "on-background": "#091d2e",
+                        "on-secondary-fixed-variant": "#005228",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#e3efff",
+                        "on-tertiary-fixed-variant": "#663e00",
+                        "surface-variant": "#d1e4fb",
+                        "secondary": "#006d37",
+                        "on-tertiary-fixed": "#2b1700",
+                        "tertiary": "#4b2d00",
+                        "secondary-fixed-dim": "#4ae183",
+                        "tertiary-fixed": "#ffddb9",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-container": "#ffa725",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#a0c9ff",
+                        "background": "#f7f9ff",
+                        "inverse-on-surface": "#e8f2ff",
+                        "surface-container-highest": "#d1e4fb",
+                        "on-primary-fixed": "#001c37",
+                        "primary-fixed-dim": "#a0c9ff",
+                        "on-secondary-fixed": "#00210c",
+                        "surface-container-low": "#edf4ff",
+                        "on-surface-variant": "#42474f",
+                        "surface-tint": "#2d6197",
+                        "on-secondary-container": "#00743a",
+                        "on-primary": "#ffffff",
+                        "secondary-container": "#6bfe9c",
+                        "inverse-surface": "#203243",
+                        "surface-dim": "#c9dcf3",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "primary-container": "#0f4c81",
+                        "primary": "#00355f",
+                        "surface-container-high": "#d9eaff",
+                        "secondary-fixed": "#6bfe9c",
+                        "tertiary-fixed-dim": "#ffb961"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "margin-desktop": "48px",
+                        "gutter": "24px",
+                        "base": "8px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "mono-data": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["13px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "mono-data": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.surface'); }
+        .glass-nav { backdrop-filter: blur(12px); }
+    </style>
+</head>
+<body class="text-on-surface antialiased min-h-screen flex flex-col pt-16">
+<!-- TopNavBar (From JSON) -->
+<nav class="bg-surface/70 border-b border-outline-variant/30 fixed top-0 w-full z-50 shadow-sm glass-nav">
+<div class="flex justify-between items-center h-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">battery_charging_full</span>
+<span class="font-headline-md text-headline-md font-bold text-primary">DM Battery House</span>
+</div>
+<div class="hidden md:flex space-x-8 items-center font-body-md text-body-md">
+<a class="text-primary border-b-2 border-primary font-bold pb-1 hover:bg-surface-container-high/50 transition-colors active:scale-95 duration-200" href="#">Products</a>
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-container-high/50 transition-colors active:scale-95 duration-200" href="#">About</a>
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-container-high/50 transition-colors active:scale-95 duration-200" href="#">Contact</a>
+</div>
+<div class="flex items-center space-x-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-md focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none w-64 transition-all" placeholder="Search batteries..." type="text"/>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-sm text-label-sm hover:bg-primary-container hover:text-on-primary-container transition-colors active:scale-95 duration-200 hidden md:block">
+                    Sign In
+                </button>
+<button class="md:hidden text-on-surface-variant">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Content Grid -->
+<main class="flex-1 w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-12">
+<div class="flex flex-col md:flex-row gap-gutter">
+<!-- Sidebar / Filters -->
+<aside class="w-full md:w-64 flex-shrink-0 mb-8 md:mb-0">
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-6 sticky top-24">
+<h2 class="font-headline-md text-headline-md mb-6">Categories</h2>
+<ul class="space-y-3 font-body-md text-body-md text-on-surface-variant">
+<li>
+<label class="flex items-center space-x-3 cursor-pointer group">
+<input checked="" class="form-checkbox text-primary rounded border-outline-variant focus:ring-primary" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors text-primary font-medium">All Batteries</span>
+</label>
+</li>
+<li>
+<label class="flex items-center space-x-3 cursor-pointer group">
+<input class="form-checkbox text-primary rounded border-outline-variant focus:ring-primary" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">Automotive</span>
+</label>
+</li>
+<li>
+<label class="flex items-center space-x-3 cursor-pointer group">
+<input class="form-checkbox text-primary rounded border-outline-variant focus:ring-primary" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">Solar / Deep Cycle</span>
+</label>
+</li>
+<li>
+<label class="flex items-center space-x-3 cursor-pointer group">
+<input class="form-checkbox text-primary rounded border-outline-variant focus:ring-primary" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">UPS Systems</span>
+</label>
+</li>
+<li>
+<label class="flex items-center space-x-3 cursor-pointer group">
+<input class="form-checkbox text-primary rounded border-outline-variant focus:ring-primary" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">Inverter Batteries</span>
+</label>
+</li>
+</ul>
+<hr class="my-6 border-outline-variant/50"/>
+<h2 class="font-headline-md text-headline-md mb-4 text-lg">Capacity (Ah)</h2>
+<ul class="space-y-3 font-body-md text-body-md text-on-surface-variant">
+<li>
+<label class="flex items-center space-x-3 cursor-pointer group">
+<input class="form-checkbox text-primary rounded border-outline-variant focus:ring-primary" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">&lt; 50Ah</span>
+</label>
+</li>
+<li>
+<label class="flex items-center space-x-3 cursor-pointer group">
+<input class="form-checkbox text-primary rounded border-outline-variant focus:ring-primary" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">50Ah - 100Ah</span>
+</label>
+</li>
+<li>
+<label class="flex items-center space-x-3 cursor-pointer group">
+<input class="form-checkbox text-primary rounded border-outline-variant focus:ring-primary" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">&gt; 100Ah</span>
+</label>
+</li>
+</ul>
+</div>
+</aside>
+<!-- Product Grid Area -->
+<div class="flex-1">
+<!-- Toolbar -->
+<div class="flex justify-between items-center mb-6 pb-4 border-b border-outline-variant/30">
+<p class="font-body-md text-body-md text-on-surface-variant">Showing <span class="font-semibold text-on-surface">1-6</span> of 24 products</p>
+<div class="flex items-center space-x-2">
+<span class="font-body-md text-sm text-on-surface-variant">Sort by:</span>
+<select class="bg-surface-container-lowest border border-outline-variant rounded-md py-1.5 pl-3 pr-8 font-body-md text-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+<option>Recommended</option>
+<option>Price: Low to High</option>
+<option>Price: High to Low</option>
+<option>Capacity</option>
+</select>
+</div>
+</div>
+<!-- Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Product Card 1 -->
+<div class="bg-surface-container-lowest border border-[#E9ECEF] rounded-lg overflow-hidden group hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05)] transition-shadow duration-300 flex flex-col h-full">
+<div class="relative h-48 bg-surface-container-low flex items-center justify-center p-4">
+<img class="object-contain h-full w-full transition-transform duration-500 group-hover:scale-105" data-alt="A studio-lit, high-resolution product shot of a sleek, black industrial solar battery with bright green terminal caps and a silver brand label. The lighting is soft and professional, set against a pristine white background reflecting a clean, modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuIsSIW9n_GWwEMWJcnsng6WWFYFqmVfJ4nuh6yyiwRWID73_dtRMT_fm8KAbWhhlrjF_7mAxGWf53uW628tgFTKfoliG-n9ZeFNA0_N0Yywc45agq0sjvfCT6lf6Pz8Y8R8koEQL4caSstFpmQg9jwjck9BZ3__lZTQweUok9oRPQRaPOh7DQjgj-K5F1GO2FpCTRdtwA-N68Xd-6Sc7orurXUFntW1LMwqPpDfdv5NZHJxytGkR5xQ"/>
+<div class="absolute top-3 right-3 bg-surface-container-lowest rounded-full p-1.5 text-outline hover:text-error transition-colors cursor-pointer shadow-sm">
+<span class="material-symbols-outlined text-sm">favorite</span>
+</div>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<div class="text-xs font-semibold text-primary uppercase tracking-wider mb-1">Voltaic</div>
+<h3 class="font-body-lg text-body-lg font-semibold mb-2 leading-tight">Pro Series Deep Cycle 150Ah</h3>
+<div class="font-mono-data text-mono-data text-on-surface-variant mb-4">12V • 150Ah • Solar / Inverter</div>
+<div class="flex items-end justify-between mt-auto">
+<div class="font-headline-md text-headline-md text-primary">$285.00</div>
+<div class="flex items-center text-secondary text-sm font-medium">
+<span class="material-symbols-outlined text-sm mr-1" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                    In Stock
+                                </div>
+</div>
+<button class="mt-4 w-full py-2 border-2 border-secondary text-secondary font-label-sm text-label-sm rounded hover:bg-secondary hover:text-white transition-colors">
+                                View Details
+                            </button>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-surface-container-lowest border border-[#E9ECEF] rounded-lg overflow-hidden group hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05)] transition-shadow duration-300 flex flex-col h-full">
+<div class="relative h-48 bg-surface-container-low flex items-center justify-center p-4">
+<img class="object-contain h-full w-full transition-transform duration-500 group-hover:scale-105" data-alt="A clean, professional studio photo of an automotive car battery. It features a sturdy dark gray casing with a blue handle and a highly legible warning label. The lighting is crisp, highlighting the textures of the plastic against a stark white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSHssQyZEo1L04l8zBSqEVNEHQC00fdziXFC0WDpllcR5ksYt6W5sA4CuSukmjW61Pwg6kl687P1NdVi4RDeVzu7S0d25MOswwYcobNYQ6LzGOLaedLH_lhMpI5YlPEhZdddvR_eMrClegyOz3q0O0FG4H3vwB8gR6Bx40qleW8bdbT8NnAYO4VaqbYZ9MMCiprfvb8alYiPNbKAXsG4zYgrxuagnu10MPRvMEppTdyW0RY6Q71O3FJg"/>
+<div class="absolute top-3 left-3 bg-tertiary-container text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wide">
+                                Best Seller
+                            </div>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<div class="text-xs font-semibold text-primary uppercase tracking-wider mb-1">AutoPower</div>
+<h3 class="font-body-lg text-body-lg font-semibold mb-2 leading-tight">Premium Start Automotive 65Ah</h3>
+<div class="font-mono-data text-mono-data text-on-surface-variant mb-4">12V • 65Ah • CCA 580</div>
+<div class="flex items-end justify-between mt-auto">
+<div class="font-headline-md text-headline-md text-primary">$110.00</div>
+<div class="flex items-center text-secondary text-sm font-medium">
+<span class="material-symbols-outlined text-sm mr-1" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                    In Stock
+                                </div>
+</div>
+<button class="mt-4 w-full py-2 border-2 border-secondary text-secondary font-label-sm text-label-sm rounded hover:bg-secondary hover:text-white transition-colors">
+                                View Details
+                            </button>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bg-surface-container-lowest border border-[#E9ECEF] rounded-lg overflow-hidden group hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05)] transition-shadow duration-300 flex flex-col h-full">
+<div class="relative h-48 bg-surface-container-low flex items-center justify-center p-4">
+<img class="object-contain h-full w-full transition-transform duration-500 group-hover:scale-105" data-alt="High-fidelity 3D render of a heavy-duty UPS backup battery bank. The unit is tall, metallic slate gray, with an LED display screen showing green bars. The lighting is dramatic yet clean, emphasizing reliability and technical precision in a modern white studio space." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-z_Nb7SlbJDKX6F8shx5Daxoxsaw-NpDAZnBHe01VuujIUpi_iz3MfaH0L48rH9vUVx1SxsjJv-5KvQF0WRckzZpwQPJVA88Y567rql3y2ufU883eo_9ud-LovabMoOXkYKoRCJd0XtdMJIxdnSV4MJ79szhwhyEfw-MQeW5TSVHDGgweu5V3m4n10k3hTa6qyvVRKdf-jnnvZgh7uecP6b9HiWbCiv41B821NaJEEootZJpIHHdNIw"/>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<div class="text-xs font-semibold text-primary uppercase tracking-wider mb-1">SecurePower</div>
+<h3 class="font-body-lg text-body-lg font-semibold mb-2 leading-tight">Enterprise UPS Module 200Ah</h3>
+<div class="font-mono-data text-mono-data text-on-surface-variant mb-4">24V • 200Ah • Rack Mount</div>
+<div class="flex items-end justify-between mt-auto">
+<div class="font-headline-md text-headline-md text-primary">$540.00</div>
+<div class="flex items-center text-error text-sm font-medium">
+<span class="material-symbols-outlined text-sm mr-1">cancel</span>
+                                    Out of Stock
+                                </div>
+</div>
+<button class="mt-4 w-full py-2 border-2 border-outline-variant text-outline-variant font-label-sm text-label-sm rounded cursor-not-allowed" disabled="">
+                                View Details
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer (From JSON) -->
+<footer class="bg-primary text-on-primary font-label-sm text-label-sm w-full py-12">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="col-span-1 md:col-span-2">
+<div class="font-headline-md text-headline-md text-on-primary mb-4 flex items-center space-x-2">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">battery_charging_full</span>
+<span>DM Battery House</span>
+</div>
+<p class="text-on-primary/80 max-w-md">Technical Precision &amp; Reliable Energy solutions for automotive, industrial, and renewable infrastructure.</p>
+</div>
+<div>
+<h4 class="font-bold mb-4">Links</h4>
+<ul class="space-y-2">
+<li><a class="text-on-primary/80 hover:text-white hover:underline transition-all" href="#">Privacy Policy</a></li>
+<li><a class="text-on-primary/80 hover:text-white hover:underline transition-all" href="#">Terms of Service</a></li>
+<li><a class="text-on-primary/80 hover:text-white hover:underline transition-all" href="#">Warranty Info</a></li>
+<li><a class="text-on-primary/80 hover:text-white hover:underline transition-all" href="#">Store Locator</a></li>
+</ul>
+</div>
+<div>
+<p class="text-on-primary/60 mt-8 md:mt-0">© 2024 DM Battery House. Technical Precision &amp; Reliable Energy.</p>
+</div>
+</div>
+</footer>
+</body></html>
