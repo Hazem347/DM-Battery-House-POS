@@ -14,13 +14,27 @@ const firebaseConfig = {
 
 // Initialize Firebase
 let app;
-if (!getApps().length) {
-  app = initializeApp(firebaseConfig);
+let auth: any;
+let db: any;
+let storage: any;
+
+if (firebaseConfig.apiKey) {
+  if (!getApps().length) {
+    app = initializeApp(firebaseConfig);
+  } else {
+    app = getApps()[0];
+  }
+  
+  auth = getAuth(app);
+  db = getFirestore(app);
+  storage = getStorage(app);
 } else {
-  app = getApps()[0];
+  console.warn("Firebase API Key is missing. Firebase services will not be initialized.");
+  // Provide mock objects or undefined exports for build-time safety
+  auth = {} as any;
+  db = {} as any;
+  storage = {} as any;
 }
 
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
+export { auth, db, storage };
 export default app;
