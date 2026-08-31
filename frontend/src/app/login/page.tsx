@@ -17,14 +17,24 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
+      console.log("Runtime Environment Check:");
+      console.log("- NEXT_PUBLIC_FIREBASE_API_KEY:", process.env.NEXT_PUBLIC_FIREBASE_API_KEY ? "DEFINED ✅" : "UNDEFINED ❌");
+      console.log("- NEXT_PUBLIC_FIREBASE_PROJECT_ID:", process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ? "DEFINED ✅" : "UNDEFINED ❌");
+      console.log("Auth Object State:", auth);
+
+      console.log("Attempting signInWithEmailAndPassword...");
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log("Sign in successful, ID:", userCredential.user.uid);
+      
       // Explicitly set the cookie here to avoid race condition with AuthContext
       const token = await userCredential.user.getIdToken();
       document.cookie = `token=${token}; path=/; max-age=86400`;
       
+      console.log("Redirecting to /admin...");
       router.push('/admin'); // Redirect to dashboard
     } catch (err: any) {
-      setError(err.message || 'Login failed. Please check your credentials.');
+      console.error("FULL LOGIN ERROR OBJECT:", err);
+      setError(`[${err.code || 'Error'}] ${err.message || 'Login failed.'}`);
     } finally {
       setIsLoading(false);
     }
