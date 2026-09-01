@@ -42,6 +42,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             // Update token in cookie for middleware
             const token = await firebaseUser.getIdToken();
             document.cookie = `token=${token}; path=/; max-age=86400`;
+            document.cookie = `role=${data.role || 'CASHIER'}; path=/; max-age=86400`;
           } else {
             setUser(null);
           }
@@ -52,6 +53,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       } else {
         setUser(null);
         document.cookie = `token=; path=/; max-age=0`;
+        document.cookie = `role=; path=/; max-age=0`;
       }
       setLoading(false);
     });
@@ -62,6 +64,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = async () => {
     await signOut(auth);
     document.cookie = `token=; path=/; max-age=0`;
+    document.cookie = `role=; path=/; max-age=0`;
     setUser(null);
     router.push('/login');
   };

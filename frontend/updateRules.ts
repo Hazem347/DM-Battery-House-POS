@@ -32,7 +32,8 @@ service cloud.firestore {
     // Publicly readable collections
     match /products/{document=**} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow update: if isAuthenticated(); // Allow POS to update stock
+      allow create, delete: if isAdmin();
     }
     
     match /categories/{document=**} {
@@ -47,7 +48,9 @@ service cloud.firestore {
 
     // Authenticated access
     match /sales/{document=**} {
-      allow read, write: if isAuthenticated();
+      allow create: if isAuthenticated();
+      // Cashiers can only read/update their own sales, admins can read/update all
+      allow read, update, delete: if isAdmin() || (isAuthenticated() && resource.data.cashierId == request.auth.uid);
     }
     
     match /customers/{document=**} {
@@ -57,6 +60,11 @@ service cloud.firestore {
     match /users/{userId} {
       allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
       allow write: if isAdmin();
+    }
+    
+    match /inquiries/{document=**} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin() || (isAuthenticated() && request.auth.token.role == 'MANAGER');
     }
     
     // Default fallback

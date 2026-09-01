@@ -1,5 +1,5 @@
-import { db, storage } from './firebase';
-import { collection, doc, getDoc, getDocs, addDoc, updateDoc, deleteDoc, query, orderBy, Timestamp, runTransaction } from 'firebase/firestore';
+import { db, storage, auth } from './firebase';
+import { collection, doc, getDoc, getDocs, addDoc, updateDoc, deleteDoc, setDoc, query, orderBy, Timestamp, runTransaction, where } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 // Helper to convert Firestore docs to objects with ID
@@ -15,9 +15,15 @@ const mapDoc = (docSnap: any) => {
 
 // --- Product API ---
 export const getProducts = async () => {
-  const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
+  const q = query(collection(db, 'products'));
   const snapshot = await getDocs(q);
-  return snapshot.docs.map(mapDoc);
+  const products = snapshot.docs.map(mapDoc);
+  // Sort descending by createdAt locally to avoid Firestore index requirement
+  return products.sort((a: any, b: any) => {
+    if (!a.createdAt) return 1;
+    if (!b.createdAt) return -1;
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
 };
 
 export const getProductById = async (id: string) => {
@@ -58,10 +64,17 @@ export const getInventory = async () => {
 };
 
 // --- Sale API ---
-export const getSales = async () => {
-  const q = query(collection(db, 'sales'), orderBy('createdAt', 'desc'));
+export const getSales = async (cashierId?: string) => {
+  const q = cashierId 
+    ? query(collection(db, 'sales'), where('cashierId', '==', cashierId))
+    : query(collection(db, 'sales'));
   const snapshot = await getDocs(q);
-  return snapshot.docs.map(mapDoc);
+  const sales = snapshot.docs.map(mapDoc);
+  return sales.sort((a: any, b: any) => {
+    if (!a.createdAt) return 1;
+    if (!b.createdAt) return -1;
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
 };
 
 export const createSale = async (saleData: any) => {
@@ -86,6 +99,7 @@ export const createSale = async (saleData: any) => {
     const finalSaleData = {
       ...saleData,
       receiptNumber,
+      cashierId: auth.currentUser?.uid || null,
       createdAt: Timestamp.now()
     };
     
@@ -123,6 +137,32 @@ export const getUsers = async () => {
   return snapshot.docs.map(mapDoc);
 };
 
+export const createUser = async (data: any) => {
+  const response = await fetch('/api/users', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error || 'Failed to create user');
+  }
+  return response.json();
+};
+
+export const updateUser = async (id: string, data: any) => {
+  const response = await fetch(`/api/users/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error || 'Failed to update user');
+  }
+  return response.json();
+};
+
 // --- Categories API ---
 export const getCategories = async () => {
   const snapshot = await getDocs(collection(db, 'categories'));
@@ -132,6 +172,12 @@ export const getCategories = async () => {
 export const createCategory = async (data: any) => {
   const docRef = await addDoc(collection(db, 'categories'), { ...data, createdAt: Timestamp.now() });
   return { id: docRef.id, ...data };
+};
+
+export const updateCategory = async (id: string, data: any) => {
+  const docRef = doc(db, 'categories', id);
+  await updateDoc(docRef, data);
+  return { id, ...data };
 };
 
 export const deleteCategory = async (id: string | number) => {
@@ -150,9 +196,30 @@ export const createBrand = async (data: any) => {
   return { id: docRef.id, ...data };
 };
 
+export const updateBrand = async (id: string, data: any) => {
+  const docRef = doc(db, 'brands', id);
+  await updateDoc(docRef, data);
+  return { id, ...data };
+};
+
 export const deleteBrand = async (id: string | number) => {
   await deleteDoc(doc(db, 'brands', String(id)));
   return { success: true };
+};
+
+// --- Settings API ---
+export const getSettings = async () => {
+  const docRef = doc(db, 'settings', 'store_config');
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) return mapDoc(docSnap);
+  return null;
+};
+
+export const updateSettings = async (data: any) => {
+  const docRef = doc(db, 'settings', 'store_config');
+  // Use setDoc with merge: true to create or update
+  await setDoc(docRef, data, { merge: true });
+  return data;
 };
 
 // --- Upload API ---
@@ -164,10 +231,40 @@ export const uploadImage = async (file: File) => {
   return { url: downloadURL };
 };
 
+// --- Inquiries API ---
+export const getInquiries = async () => {
+  const q = query(collection(db, 'inquiries'));
+  const snapshot = await getDocs(q);
+  const inquiries = snapshot.docs.map(mapDoc);
+  return inquiries.sort((a: any, b: any) => {
+    if (!a.createdAt) return 1;
+    if (!b.createdAt) return -1;
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
+};
+
+export const createInquiry = async (data: any) => {
+  const docRef = await addDoc(collection(db, 'inquiries'), { ...data, createdAt: Timestamp.now() });
+  return { id: docRef.id, ...data };
+};
+
+export const updateInquiry = async (id: string, data: any) => {
+  const docRef = doc(db, 'inquiries', id);
+  await updateDoc(docRef, { ...data, updatedAt: Timestamp.now() });
+};
+
+export const deleteInquiry = async (id: string) => {
+  const docRef = doc(db, 'inquiries', id);
+  await deleteDoc(docRef);
+};
+
 export default {
   getProducts, getProductById, createProduct, updateProduct, deleteProduct,
   getInventory, getSales, createSale,
   getCustomers, createCustomer, updateCustomer, deleteCustomer,
-  getUsers, getCategories, createCategory, deleteCategory,
-  getBrands, createBrand, deleteBrand, uploadImage
+  getUsers, createUser, updateUser,
+  getCategories, createCategory, updateCategory, deleteCategory,
+  getBrands, createBrand, updateBrand, deleteBrand, 
+  getSettings, updateSettings, uploadImage,
+  getInquiries, createInquiry, updateInquiry, deleteInquiry
 };

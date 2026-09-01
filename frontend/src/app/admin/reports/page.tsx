@@ -11,7 +11,7 @@ export default function ReportsPage() {
 
   const { data: allSales, isLoading: isLoadingSales } = useQuery({
     queryKey: ['sales'],
-    queryFn: getSales
+    queryFn: () => getSales()
   });
 
   const { data: products, isLoading: isLoadingProducts } = useQuery({

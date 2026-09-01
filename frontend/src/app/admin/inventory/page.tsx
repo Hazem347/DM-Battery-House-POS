@@ -194,7 +194,7 @@ export default function InventoryPage() {
                   const isLow = stock > 0 && stock <= (product.minStockLevel || 5);
                   
                   return (
-                    <tr key={product.id} className={`${isOut ? 'bg-error-container/10' : isLow ? 'bg-[#fef5e7]/30' : 'hover:bg-surface-container/30'} transition-colors group`}>
+                    <tr key={product.id} className={`${isOut ? 'bg-error-container/10' : isLow ? 'bg-tertiary-container/30' : 'hover:bg-surface-container/30'} transition-colors group`}>
                       <td className="p-4">
                         <div className="flex items-center gap-3">
                           <div className={`font-body-md text-body-md font-medium ${isOut ? 'text-on-surface-variant' : 'text-on-surface'} font-sans`}>{product.name}</div>
@@ -202,12 +202,12 @@ export default function InventoryPage() {
                       </td>
                       <td className="p-4 text-on-surface-variant">{product.sku}</td>
                       <td className="p-4 text-right font-medium text-on-surface-variant">{formatCurrency(product.salePrice)}</td>
-                      <td className={`p-4 text-right font-bold ${isOut ? 'text-error' : isLow ? 'text-accent-orange' : 'text-on-surface'}`}>{stock}</td>
+                      <td className={`p-4 text-right font-bold ${isOut ? 'text-error' : isLow ? 'text-tertiary' : 'text-on-surface'}`}>{stock}</td>
                       <td className="p-4 font-sans">
                         {isOut ? (
                           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-error-container/50 text-on-error-container font-label-sm text-[11px] border border-error-container">Out of Stock</span>
                         ) : isLow ? (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#fef5e7] text-accent-orange font-label-sm text-[11px] border border-[#fbdcb0]">Low Stock</span>
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-tertiary-container/50 text-on-tertiary-container font-label-sm text-[11px] border border-tertiary-container/50">Low Stock</span>
                         ) : (
                           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container/50 text-on-secondary-container font-label-sm text-[11px] border border-secondary-container">In Stock</span>
                         )}

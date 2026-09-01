@@ -8,17 +8,17 @@ export default function AboutPage() {
       <div className="bg-surface-container-low rounded-2xl p-8 md:p-16 mt-8 flex flex-col md:flex-row items-center gap-12 overflow-hidden relative">
         <div className="absolute inset-0 bg-primary/5 opacity-50 mix-blend-multiply"></div>
         <div className="md:w-1/2 relative z-10">
-          <h1 className="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary font-bold mb-4">
-            Powering Your World Since 1998
+          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-primary font-bold mb-6 leading-tight">
+            Trusted Battery Specialists
           </h1>
-          <p className="font-body-lg text-body-lg text-on-surface-variant mb-8">
-            DM Battery House is the leading provider of premium automotive, marine, and industrial batteries. With over two decades of expertise, we don't just sell batteries; we provide reliable power solutions designed to keep you moving forward.
+          <p className="font-sans text-lg md:text-xl text-on-surface-variant mb-8 leading-relaxed">
+            DM Battery House is a leading provider of premium automotive, marine, and industrial batteries. We don't just sell batteries; we provide reliable power solutions designed to keep you moving forward.
           </p>
           <div className="flex gap-4">
-            <Link href="/products" className="bg-primary text-on-primary px-6 py-3 rounded-full font-label-sm hover:bg-primary/90 transition-transform hover:scale-105 shadow-md">
+            <Link href="/products" className="bg-primary text-on-primary px-8 py-4 rounded-full font-semibold shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-1 transition-all">
               Explore Our Products
             </Link>
-            <Link href="/contact" className="bg-surface border border-outline-variant text-on-surface px-6 py-3 rounded-full font-label-sm hover:bg-surface-container-low transition-colors">
+            <Link href="/contact" className="bg-surface border-2 border-outline-variant text-on-surface px-8 py-4 rounded-full font-semibold hover:border-primary hover:text-primary hover:bg-primary/5 transition-all">
               Contact Us
             </Link>
           </div>
@@ -29,29 +29,29 @@ export default function AboutPage() {
       </div>
 
       {/* Core Values */}
-      <div className="mt-20">
-        <h2 className="text-center font-display-lg-mobile md:font-headline-md text-headline-md text-on-surface font-bold mb-12">Our Core Values</h2>
+      <div className="mt-24">
+        <h2 className="text-center font-display text-3xl md:text-4xl text-on-surface font-bold mb-16">Our Core Values</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/30 hover:shadow-lg transition-all hover:-translate-y-1">
-            <div className="w-14 h-14 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center mb-6">
+          <div className="bg-surface-container-lowest p-10 rounded-2xl border border-outline-variant/30 hover:shadow-xl hover:shadow-primary/5 transition-all hover:-translate-y-2 group">
+            <div className="w-16 h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-on-primary transition-all">
               <span className="material-symbols-outlined text-3xl">verified</span>
             </div>
-            <h3 className="font-headline-md text-[20px] font-bold text-on-surface mb-3">Uncompromising Quality</h3>
-            <p className="text-on-surface-variant font-body-md text-body-md">Every product we stock undergoes rigorous testing to ensure it meets our strict standards for durability and performance.</p>
+            <h3 className="font-display text-2xl font-bold text-on-surface mb-4">Uncompromising Quality</h3>
+            <p className="text-on-surface-variant font-sans text-lg leading-relaxed">Every product we stock undergoes rigorous testing to ensure it meets our strict standards for durability and performance.</p>
           </div>
-          <div className="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/30 hover:shadow-lg transition-all hover:-translate-y-1">
-            <div className="w-14 h-14 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center mb-6">
+          <div className="bg-surface-container-lowest p-10 rounded-2xl border border-outline-variant/30 hover:shadow-xl hover:shadow-primary/5 transition-all hover:-translate-y-2 group">
+            <div className="w-16 h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-on-primary transition-all">
               <span className="material-symbols-outlined text-3xl">support_agent</span>
             </div>
-            <h3 className="font-headline-md text-[20px] font-bold text-on-surface mb-3">Expert Support</h3>
-            <p className="text-on-surface-variant font-body-md text-body-md">Our team of certified technicians provides unparalleled advice, installation, and after-sales service.</p>
+            <h3 className="font-display text-2xl font-bold text-on-surface mb-4">Expert Support</h3>
+            <p className="text-on-surface-variant font-sans text-lg leading-relaxed">Our team of certified technicians provides unparalleled advice, installation, and after-sales service.</p>
           </div>
-          <div className="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/30 hover:shadow-lg transition-all hover:-translate-y-1">
-            <div className="w-14 h-14 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center mb-6">
+          <div className="bg-surface-container-lowest p-10 rounded-2xl border border-outline-variant/30 hover:shadow-xl hover:shadow-primary/5 transition-all hover:-translate-y-2 group">
+            <div className="w-16 h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-on-primary transition-all">
               <span className="material-symbols-outlined text-3xl">eco</span>
             </div>
-            <h3 className="font-headline-md text-[20px] font-bold text-on-surface mb-3">Sustainable Practices</h3>
-            <p className="text-on-surface-variant font-body-md text-body-md">We are committed to environmental responsibility through our comprehensive battery recycling programs.</p>
+            <h3 className="font-display text-2xl font-bold text-on-surface mb-4">Sustainable Practices</h3>
+            <p className="text-on-surface-variant font-sans text-lg leading-relaxed">We are committed to environmental responsibility through our comprehensive battery recycling programs.</p>
           </div>
         </div>
       </div>

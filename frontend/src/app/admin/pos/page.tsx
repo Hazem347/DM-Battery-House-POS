@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo, useRef } from "react";
 import { useQuery } from '@tanstack/react-query';
-import { getProducts, getCategories, createSale } from '@/lib/api';
+import { getProducts, getCategories, createSale, getSettings } from '@/lib/api';
 import { formatCurrency } from '@/lib/currency';
 
 interface CartItem {
@@ -28,6 +28,11 @@ export default function POSPage() {
   const { data: categories } = useQuery({
     queryKey: ['categories'],
     queryFn: getCategories
+  });
+
+  const { data: settings } = useQuery({
+    queryKey: ['settings'],
+    queryFn: getSettings
   });
 
   const filteredProducts = useMemo(() => {
@@ -75,7 +80,10 @@ export default function POSPage() {
     return cart.reduce((sum, item) => sum + (item.product.salePrice * item.quantity), 0);
   }, [cart]);
 
-  const tax = useMemo(() => subtotal * 0.085, [subtotal]);
+  const tax = useMemo(() => {
+    const rate = settings?.taxRate !== undefined ? settings.taxRate : 8.5;
+    return subtotal * (rate / 100);
+  }, [subtotal, settings]);
   const grandTotal = useMemo(() => subtotal + tax - discount, [subtotal, tax, discount]);
 
   const handleCheckout = async () => {
@@ -136,7 +144,7 @@ export default function POSPage() {
   };
 
   return (
-    <div className="flex-1 flex overflow-hidden">
+    <div className="absolute inset-0 top-16 flex overflow-hidden bg-surface">
       {/* Left Category Sidebar & Product Grid */}
       <div className="flex-1 flex flex-col min-w-0 bg-surface-bright">
         {/* Search Bar */}
@@ -351,7 +359,11 @@ export default function POSPage() {
           {/* Hidden Print Area */}
           <div id="receipt-print-area" className="hidden">
             <div style={{ padding: '20px', fontFamily: 'monospace', width: '300px', margin: '0 auto', color: '#000' }}>
-              <h2 style={{ textAlign: 'center', marginBottom: '10px' }}>DM Battery House</h2>
+              <h2 style={{ textAlign: 'center', marginBottom: '5px' }}>{settings?.storeName || 'DM Battery House'}</h2>
+              {settings?.address && <p style={{ textAlign: 'center', margin: '0 0 5px 0', fontSize: '12px' }}>{settings.address}</p>}
+              {settings?.phone && <p style={{ textAlign: 'center', margin: '0 0 10px 0', fontSize: '12px' }}>Tel: {settings.phone}</p>}
+              {settings?.receiptHeader && <p style={{ textAlign: 'center', margin: '0 0 10px 0', fontSize: '12px', whiteSpace: 'pre-wrap' }}>{settings.receiptHeader}</p>}
+              
               <p style={{ textAlign: 'center', margin: 0 }}>Receipt: {completedSale.receiptNumber}</p>
               <p style={{ textAlign: 'center', margin: '0 0 20px 0' }}>Date: {new Date().toLocaleString()}</p>
               <table style={{ width: '100%', marginBottom: '20px', fontSize: '12px' }}>
@@ -378,7 +390,7 @@ export default function POSPage() {
                 {completedSale.discount > 0 && <p>Discount: -{formatCurrency(completedSale.discount)}</p>}
                 <h3 style={{ marginTop: '10px' }}>Total: {formatCurrency(completedSale.finalAmount)}</h3>
               </div>
-              <p style={{ textAlign: 'center', marginTop: '20px' }}>Thank you for your business!</p>
+              <p style={{ textAlign: 'center', marginTop: '20px', whiteSpace: 'pre-wrap' }}>{settings?.receiptFooter || 'Thank you for your business!'}</p>
             </div>
           </div>
         </div>

@@ -1,25 +1,52 @@
 'use client';
-import React, { useMemo, useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useQuery } from '@tanstack/react-query';
-import { getSales, getProducts, getCustomers } from '@/lib/api';
+import { useAuth } from '@/context/AuthContext';
+import { getSales, getProducts, getCustomers, getSettings } from '@/lib/api';
 import { formatCurrency } from '@/lib/currency';
 
 export default function AdminDashboard() {
+  const { user } = useAuth();
   const [dateFilter, setDateFilter] = useState<'30' | 'all'>('30');
   
-  const { data: allSales, isLoading: isLoadingSales } = useQuery({
+  const { data: allSales, isLoading: isLoadingSales, isError: isErrorSales } = useQuery({
     queryKey: ['sales'],
-    queryFn: getSales
+    queryFn: () => getSales()
   });
 
-  const { data: products, isLoading: isLoadingProducts } = useQuery({
+  const { data: products, isLoading: isLoadingProducts, isError: isErrorProducts } = useQuery({
     queryKey: ['products'],
     queryFn: getProducts
   });
 
-  const { data: customers } = useQuery({
+  const [selectedSale, setSelectedSale] = useState<any>(null);
+  const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const closeDropdown = () => setOpenDropdownId(null);
+    document.addEventListener("click", closeDropdown);
+    return () => document.removeEventListener("click", closeDropdown);
+  }, []);
+
+  const printReceipt = () => {
+    const printContent = document.getElementById('receipt-print-area');
+    if (printContent) {
+      const originalContents = document.body.innerHTML;
+      document.body.innerHTML = printContent.innerHTML;
+      window.print();
+      document.body.innerHTML = originalContents;
+      window.location.reload();
+    }
+  };
+
+  const { data: customers, isError: isErrorCustomers } = useQuery({
     queryKey: ['customers'],
     queryFn: getCustomers
+  });
+
+  const { data: settings } = useQuery({
+    queryKey: ['settings'],
+    queryFn: getSettings
   });
 
   const sales = useMemo(() => {
@@ -33,9 +60,11 @@ export default function AdminDashboard() {
   const stats = useMemo(() => {
     if (!sales || !products) return { totalRevenue: 0, activeInventory: 0, stockAlerts: 0, newPartners: 0 };
     
+    const lowStockThreshold = settings?.lowStockThreshold || 5;
+
     const totalRevenue = sales.reduce((sum: number, sale: any) => sum + Number(sale.finalAmount), 0);
     const activeInventory = products.reduce((sum: number, p: any) => sum + (Number(p.inventory?.quantity) || 0), 0);
-    const stockAlerts = products.filter((p: any) => (p.inventory?.quantity || 0) <= (p.minStockLevel || 5)).length;
+    const stockAlerts = products.filter((p: any) => (p.inventory?.quantity || 0) <= lowStockThreshold).length;
     
     return {
       totalRevenue,
@@ -43,7 +72,7 @@ export default function AdminDashboard() {
       stockAlerts,
       newPartners: customers ? customers.length : 0
     };
-  }, [sales, products, customers]);
+  }, [sales, products, customers, settings]);
 
   const chartData = useMemo(() => {
     if (!sales) return Array(6).fill(0);
@@ -57,6 +86,14 @@ export default function AdminDashboard() {
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
     return months.map(m => grouped[m] || 0);
   }, [sales]);
+
+  const salesTodayCount = useMemo(() => {
+    if (!allSales) return 0;
+    const today = new Date().toDateString();
+    return allSales.filter((s: any) => new Date(s.createdAt).toDateString() === today).length;
+  }, [allSales]);
+
+  const isConnected = !isErrorSales && !isErrorProducts && !isErrorCustomers;
 
   const maxChartValue = Math.max(...chartData, 100000);
 
@@ -228,54 +265,50 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* System Health */}
-        <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6 flex flex-col">
-          <h3 className="font-headline-md text-on-surface mb-6">System Health</h3>
-          <div className="space-y-6 flex-1">
-            <div>
-              <div className="flex justify-between items-center mb-2">
-                <span className="font-mono-data text-on-surface-variant flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[18px] text-secondary">check_circle</span>
-                  API Connectivity
-                </span>
-                <span className="font-label-sm text-secondary">Operational</span>
-              </div>
-              <div className="w-full bg-surface-container-high rounded-full h-1.5">
-                <div className="bg-secondary h-1.5 rounded-full" style={{ width: '100%' }}></div>
+        {/* System Overview */}
+        {user?.role !== 'CASHIER' && (
+          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6 flex flex-col">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="font-headline-md text-on-surface">System Overview</h3>
+              <div className={`px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 ${isConnected ? 'bg-secondary/20 text-secondary' : 'bg-error/20 text-error'}`}>
+                <span className="material-symbols-outlined text-[14px]">{isConnected ? 'wifi' : 'wifi_off'}</span>
+                {isConnected ? 'Connected' : 'Connection Error'}
               </div>
             </div>
-            <div>
-              <div className="flex justify-between items-center mb-2">
-                <span className="font-mono-data text-on-surface-variant flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[18px] text-primary">storage</span>
-                  Database Load
-                </span>
-                <span className="font-label-sm text-on-surface">15%</span>
+            
+            <div className="space-y-4 flex-1">
+              <div className="bg-surface-container-low p-4 rounded-lg flex items-center justify-between border border-outline-variant/10 hover:border-outline-variant/30 transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-primary-container/20 text-primary rounded-lg">
+                    <span className="material-symbols-outlined text-[20px]">inventory_2</span>
+                  </div>
+                  <span className="font-label-sm text-on-surface-variant uppercase tracking-wider">Total Products</span>
+                </div>
+                <span className="font-headline-sm font-bold text-on-surface">{products?.length || 0}</span>
               </div>
-              <div className="w-full bg-surface-container-high rounded-full h-1.5">
-                <div className="bg-primary h-1.5 rounded-full" style={{ width: '15%' }}></div>
+              
+              <div className="bg-surface-container-low p-4 rounded-lg flex items-center justify-between border border-outline-variant/10 hover:border-outline-variant/30 transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-secondary-container/20 text-secondary rounded-lg">
+                    <span className="material-symbols-outlined text-[20px]">people</span>
+                  </div>
+                  <span className="font-label-sm text-on-surface-variant uppercase tracking-wider">Registered Customers</span>
+                </div>
+                <span className="font-headline-sm font-bold text-on-surface">{customers?.length || 0}</span>
               </div>
-            </div>
-            <div>
-              <div className="flex justify-between items-center mb-2">
-                <span className="font-mono-data text-on-surface-variant flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[18px] text-primary">cloud_done</span>
-                  Backup Storage
-                </span>
-                <span className="font-label-sm text-primary">Healthy</span>
-              </div>
-              <div className="w-full bg-surface-container-high rounded-full h-1.5">
-                <div className="bg-primary h-1.5 rounded-full" style={{ width: '32%' }}></div>
+              
+              <div className="bg-surface-container-low p-4 rounded-lg flex items-center justify-between border border-outline-variant/10 hover:border-outline-variant/30 transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-tertiary-container/20 text-tertiary rounded-lg">
+                    <span className="material-symbols-outlined text-[20px]">receipt_long</span>
+                  </div>
+                  <span className="font-label-sm text-on-surface-variant uppercase tracking-wider">Sales Today</span>
+                </div>
+                <span className="font-headline-sm font-bold text-on-surface">{salesTodayCount}</span>
               </div>
             </div>
           </div>
-          <div className="mt-auto pt-6">
-            <button className="w-full bg-surface text-primary border border-outline-variant/50 py-2.5 rounded-lg hover:bg-surface-container-low transition-colors font-label-sm flex justify-center items-center gap-2" onClick={() => alert('Diagnostics run successfully.')}>
-              Run Diagnostics
-              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
-            </button>
-          </div>
-        </div>
+        )}
       </div>
 
       {/* Recent Transactions Table Area */}
@@ -303,10 +336,19 @@ export default function AdminDashboard() {
                   <td className="py-2 px-6 font-medium text-on-surface">{sale.paymentMethod || 'N/A'}</td>
                   <td className="py-2 px-6 text-on-surface-variant">{new Date(sale.createdAt).toLocaleDateString()}</td>
                   <td className="py-2 px-6 text-right font-bold">{formatCurrency(sale.finalAmount)}</td>
-                  <td className="py-2 px-6 text-right">
-                    <button className="text-outline hover:text-primary transition-colors p-1" onClick={() => alert(`View details for ${sale.receiptNumber}`)}>
+                  <td className="py-2 px-6 text-right relative">
+                    <button 
+                      className="text-outline hover:text-primary transition-colors p-1" 
+                      onClick={(e) => { e.stopPropagation(); setOpenDropdownId(openDropdownId === sale.id ? null : sale.id); }}
+                    >
                       <span className="material-symbols-outlined text-[20px]">more_vert</span>
                     </button>
+                    {openDropdownId === sale.id && (
+                      <div className="absolute right-6 top-full mt-1 bg-surface shadow-lg border border-outline-variant/30 rounded p-1 z-50 min-w-[150px] text-left">
+                        <button onClick={(e) => { e.stopPropagation(); setSelectedSale(sale); setOpenDropdownId(null); }} className="w-full text-left px-4 py-2 text-sm hover:bg-surface-variant rounded">View Details</button>
+                        <button onClick={(e) => { e.stopPropagation(); setSelectedSale(sale); setTimeout(() => printReceipt(), 100); setOpenDropdownId(null); }} className="w-full text-left px-4 py-2 text-sm hover:bg-surface-variant rounded">Print Receipt</button>
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -317,6 +359,72 @@ export default function AdminDashboard() {
           </table>
         </div>
       </div>
+
+      {/* Sale Details Modal */}
+      {selectedSale && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="bg-surface p-8 rounded-xl shadow-xl w-full max-w-sm">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="font-headline-sm font-bold">Receipt Details</h3>
+              <button onClick={() => setSelectedSale(null)} className="text-on-surface-variant hover:text-error">
+                <span className="material-symbols-outlined">close</span>
+              </button>
+            </div>
+            
+            <div className="space-y-3">
+              <div className="text-sm">
+                <p><strong>Receipt:</strong> {selectedSale.receiptNumber}</p>
+                <p><strong>Date:</strong> {new Date(selectedSale.createdAt).toLocaleString()}</p>
+                <p><strong>Total:</strong> {formatCurrency(selectedSale.finalAmount)}</p>
+                <p><strong>Payment:</strong> {selectedSale.paymentMethod || 'N/A'}</p>
+                <p><strong>Cashier UID:</strong> {selectedSale.cashierId}</p>
+              </div>
+              
+              <button 
+                onClick={printReceipt}
+                className="w-full flex items-center justify-center py-3 bg-primary text-on-primary rounded-lg font-bold hover:bg-primary-container transition-colors mt-4"
+              >
+                <span className="material-symbols-outlined align-middle mr-2 text-sm">print</span>
+                Print Receipt
+              </button>
+            </div>
+          </div>
+          
+          <div id="receipt-print-area" className="hidden">
+            <div style={{ padding: '20px', fontFamily: 'monospace', width: '300px', margin: '0 auto', color: '#000' }}>
+              <h2 style={{ textAlign: 'center', marginBottom: '10px' }}>DM Battery House</h2>
+              <p style={{ textAlign: 'center', margin: 0 }}>Receipt: {selectedSale.receiptNumber}</p>
+              <p style={{ textAlign: 'center', margin: '0 0 20px 0' }}>Date: {new Date(selectedSale.createdAt).toLocaleString()}</p>
+              <p style={{ textAlign: 'center', margin: '0 0 20px 0' }}>Cashier UID: {selectedSale.cashierId}</p>
+              <table style={{ width: '100%', marginBottom: '20px', fontSize: '12px' }}>
+                <thead>
+                  <tr style={{ borderBottom: '1px dashed #000' }}>
+                    <th style={{ textAlign: 'left', paddingBottom: '5px' }}>Item</th>
+                    <th style={{ textAlign: 'right', paddingBottom: '5px' }}>Qty</th>
+                    <th style={{ textAlign: 'right', paddingBottom: '5px' }}>Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {selectedSale.items?.map((item: any, idx: number) => (
+                    <tr key={idx}>
+                      <td style={{ paddingTop: '5px' }}>{item.productName || 'Product'}</td>
+                      <td style={{ textAlign: 'right', paddingTop: '5px' }}>{item.quantity}</td>
+                      <td style={{ textAlign: 'right', paddingTop: '5px' }}>{formatCurrency(item.unitPrice * item.quantity)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div style={{ borderTop: '1px dashed #000', paddingTop: '10px', textAlign: 'right', fontSize: '12px' }}>
+                <p>Subtotal: {formatCurrency(selectedSale.totalAmount)}</p>
+                <p>Tax: {formatCurrency(selectedSale.tax)}</p>
+                {selectedSale.discount > 0 && <p>Discount: -{formatCurrency(selectedSale.discount)}</p>}
+                <h3 style={{ marginTop: '10px' }}>Total: {formatCurrency(selectedSale.finalAmount)}</h3>
+              </div>
+              <p style={{ textAlign: 'center', marginTop: '20px' }}>Thank you for your business!</p>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

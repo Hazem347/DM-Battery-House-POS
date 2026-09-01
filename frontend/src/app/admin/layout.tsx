@@ -1,8 +1,9 @@
 'use client';
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -19,6 +20,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const [isNotifOpen, setIsNotifOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const notifRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (notifRef.current && !notifRef.current.contains(event.target as Node)) {
+        setIsNotifOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const NavLink = ({ href, icon, label }: { href: string; icon: string; label: string }) => {
     const isActive = pathname === href;
@@ -53,13 +65,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
         
         <div className="flex-1 overflow-y-auto space-y-1 px-2">
-          <NavLink href="/admin" icon="dashboard" label="Dashboard" />
-          <NavLink href="/admin/inventory" icon="inventory_2" label="Inventory" />
+          {user?.role !== 'CASHIER' && <NavLink href="/admin" icon="dashboard" label="Dashboard" />}
+          {user?.role !== 'CASHIER' && <NavLink href="/admin/inventory" icon="inventory_2" label="Inventory" />}
           <NavLink href="/admin/pos" icon="point_of_sale" label="POS" />
-          <NavLink href="/admin/reports" icon="analytics" label="Reports" />
-          <NavLink href="/admin/customers" icon="people" label="Customers" />
+          {user?.role !== 'CASHIER' && <NavLink href="/admin/reports" icon="analytics" label="Reports" />}
+          {user?.role !== 'CASHIER' && <NavLink href="/admin/customers" icon="people" label="Customers" />}
           <NavLink href="/admin/sales" icon="receipt_long" label="Sales" />
-          <NavLink href="/admin/management" icon="settings" label="Management" />
+          {user?.role === 'ADMIN' && <NavLink href="/admin/management" icon="settings" label="Management" />}
         </div>
 
         <div className="mt-auto px-2 pt-4 border-t border-outline-variant/30 space-y-1 pb-4">
@@ -86,34 +98,34 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </div>
           
           <div className="flex items-center gap-2 relative">
-            <button aria-label="Notifications" onClick={() => {setIsNotifOpen(!isNotifOpen); setIsProfileOpen(false);}} className="p-2 text-on-surface-variant hover:bg-surface-variant/40 rounded-full active:scale-90 transition-transform relative">
-              <span className="material-symbols-outlined">notifications</span>
-              <span className="absolute top-1.5 right-1.5 block h-2.5 w-2.5 rounded-full bg-error ring-2 ring-surface"></span>
-            </button>
-            {isNotifOpen && (
-              <div className="absolute top-14 right-48 w-80 bg-surface border border-outline-variant rounded-lg shadow-lg z-50">
-                <div className="p-4 border-b border-outline-variant/30 flex justify-between items-center">
-                  <h3 className="font-bold text-on-surface">Notifications</h3>
-                  <button className="text-primary text-xs font-medium">Mark all as read</button>
-                </div>
-                <div className="divide-y divide-outline-variant/10 max-h-64 overflow-y-auto">
-                  <div className="p-4 hover:bg-surface-container-lowest cursor-pointer">
-                    <p className="font-label-sm text-on-surface font-medium">Low Stock Alert</p>
-                    <p className="text-xs text-on-surface-variant mt-1">Product SKU-102 is running low (2 left).</p>
-                    <p className="text-[10px] text-outline mt-1">10 mins ago</p>
+            <ThemeToggle />
+            <div ref={notifRef} className="relative flex items-center">
+              <button aria-label="Notifications" onClick={() => {setIsNotifOpen(!isNotifOpen); setIsProfileOpen(false);}} className="p-2 text-on-surface-variant hover:bg-surface-variant/40 rounded-full active:scale-90 transition-transform relative">
+                <span className="material-symbols-outlined">notifications</span>
+                <span className="absolute top-1.5 right-1.5 block h-2.5 w-2.5 rounded-full bg-error ring-2 ring-surface"></span>
+              </button>
+              {isNotifOpen && (
+                <div className="absolute top-14 right-0 w-80 bg-surface border border-outline-variant rounded-lg shadow-lg z-50">
+                  <div className="p-4 border-b border-outline-variant/30 flex justify-between items-center">
+                    <h3 className="font-bold text-on-surface">Notifications</h3>
+                    <button className="text-primary text-xs font-medium">Mark all as read</button>
                   </div>
-                  <div className="p-4 hover:bg-surface-container-lowest cursor-pointer">
-                    <p className="font-label-sm text-on-surface font-medium">New Sale</p>
-                    <p className="text-xs text-on-surface-variant mt-1">Receipt REC-17382029 was generated.</p>
-                    <p className="text-[10px] text-outline mt-1">1 hour ago</p>
+                  <div className="divide-y divide-outline-variant/10 max-h-64 overflow-y-auto">
+                    <div className="p-4 hover:bg-surface-container-lowest cursor-pointer">
+                      <p className="font-label-sm text-on-surface font-medium">Low Stock Alert</p>
+                      <p className="text-xs text-on-surface-variant mt-1">Product SKU-102 is running low (2 left).</p>
+                      <p className="text-[10px] text-outline mt-1">10 mins ago</p>
+                    </div>
+                    <div className="p-4 hover:bg-surface-container-lowest cursor-pointer">
+                      <p className="font-label-sm text-on-surface font-medium">New Sale</p>
+                      <p className="text-xs text-on-surface-variant mt-1">Receipt REC-17382029 was generated.</p>
+                      <p className="text-[10px] text-outline mt-1">1 hour ago</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
-
-            <button aria-label="Apps" className="p-2 text-on-surface-variant hover:bg-surface-variant/40 rounded-full active:scale-90 transition-transform mr-4">
-              <span className="material-symbols-outlined">apps</span>
-            </button>
+              )}
+            </div>
+            
             <div className="h-8 w-px bg-outline-variant/50 mr-4"></div>
             
             <div className="relative">

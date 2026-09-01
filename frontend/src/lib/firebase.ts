@@ -31,7 +31,7 @@ if (firebaseConfig.apiKey) {
 } else {
   console.warn("Firebase API Key is missing. Firebase services will not be initialized.");
   // Provide mock objects or undefined exports for build-time safety
-  auth = {} as any;
+  auth = { onAuthStateChanged: () => () => {}, signOut: async () => {} } as any;
   db = {} as any;
   storage = {} as any;
 }

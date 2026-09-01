@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getSales, deleteProduct } from '@/lib/api'; // note: lib/api.ts doesn't have deleteSale yet, let's just implement delete logic inline with firebase, or add it to api.ts. Wait, I should add deleteSale to api.ts first.
 import { formatCurrency } from '@/lib/currency';
+import { useAuth } from "@/context/AuthContext";
 
 // We will add it to api.ts, but for now I'll use inline firebase
 import { doc, deleteDoc } from 'firebase/firestore';
@@ -12,10 +13,14 @@ import { db } from '@/lib/firebase';
 export default function SalesPage() {
   const queryClient = useQueryClient();
   const [selectedSale, setSelectedSale] = useState<any>(null);
+  const { user } = useAuth();
+  
+  const [dateFilter, setDateFilter] = useState<string>('all');
+  const [paymentFilter, setPaymentFilter] = useState<string>('all');
 
   const { data: sales, isLoading } = useQuery({
-    queryKey: ['sales'],
-    queryFn: getSales
+    queryKey: ['sales', user?.uid],
+    queryFn: () => getSales(user?.role === 'CASHIER' ? user?.uid : undefined)
   });
 
   const deleteMutation = useMutation({
@@ -27,11 +32,35 @@ export default function SalesPage() {
     }
   });
 
+  const filteredSales = React.useMemo(() => {
+    if (!sales) return [];
+    let filtered = sales;
+    
+    if (paymentFilter !== 'all') {
+      filtered = filtered.filter((s: any) => s.paymentMethod === paymentFilter);
+    }
+    
+    if (dateFilter !== 'all') {
+      const now = new Date();
+      let cutoff = new Date();
+      if (dateFilter === 'today') {
+        cutoff.setHours(0, 0, 0, 0);
+      } else if (dateFilter === '7days') {
+        cutoff.setDate(now.getDate() - 7);
+      } else if (dateFilter === '30days') {
+        cutoff.setDate(now.getDate() - 30);
+      }
+      filtered = filtered.filter((s: any) => new Date(s.createdAt) >= cutoff);
+    }
+    
+    return filtered;
+  }, [sales, dateFilter, paymentFilter]);
+
   const handleExport = () => {
-    if (!sales) return;
+    if (!filteredSales) return;
     const csvRows = [
       ['Receipt No', 'Date', 'Amount', 'Tax', 'Discount', 'Payment Method'].join(','),
-      ...sales.map((s: any) => [
+      ...filteredSales.map((s: any) => [
         s.receiptNumber,
         new Date(s.createdAt).toLocaleDateString(),
         s.finalAmount,
@@ -74,6 +103,27 @@ export default function SalesPage() {
           </button>
         </div>
 
+        {/* Filters */}
+        <div className="flex flex-col sm:flex-row gap-4 bg-surface-container-lowest p-4 rounded-xl border border-surface-container-highest shadow-sm">
+          <div className="flex-1">
+            <label className="block text-xs font-bold mb-1">Date Range</label>
+            <select value={dateFilter} onChange={e => setDateFilter(e.target.value)} className="w-full border border-outline-variant bg-surface rounded-lg p-2 focus:ring-1 focus:ring-primary outline-none text-sm">
+              <option value="all">All Time</option>
+              <option value="today">Today</option>
+              <option value="7days">Last 7 Days</option>
+              <option value="30days">Last 30 Days</option>
+            </select>
+          </div>
+          <div className="flex-1">
+            <label className="block text-xs font-bold mb-1">Payment Method</label>
+            <select value={paymentFilter} onChange={e => setPaymentFilter(e.target.value)} className="w-full border border-outline-variant bg-surface rounded-lg p-2 focus:ring-1 focus:ring-primary outline-none text-sm">
+              <option value="all">All Methods</option>
+              <option value="CASH">Cash</option>
+              <option value="CARD">Card</option>
+            </select>
+          </div>
+        </div>
+
         <div className="bg-surface-container-lowest rounded-xl border border-surface-container-highest overflow-hidden shadow-sm">
           <table className="w-full text-left border-collapse">
             <thead>
@@ -89,7 +139,7 @@ export default function SalesPage() {
             <tbody className="divide-y divide-surface-container-highest font-mono-data">
               {isLoading ? (
                 <tr><td colSpan={6} className="p-8 text-center font-sans">Loading...</td></tr>
-              ) : sales?.map((sale: any) => (
+              ) : filteredSales?.map((sale: any) => (
                 <tr key={sale.id} className="hover:bg-surface-container/30 transition-colors group">
                   <td className="p-4 text-primary font-medium">{sale.receiptNumber}</td>
                   <td className="p-4 text-on-surface-variant">{new Date(sale.createdAt).toLocaleDateString()} {new Date(sale.createdAt).toLocaleTimeString()}</td>
