@@ -11,12 +11,14 @@ export default function AdminDashboard() {
   
   const { data: allSales, isLoading: isLoadingSales, isError: isErrorSales } = useQuery({
     queryKey: ['sales'],
-    queryFn: () => getSales()
+    queryFn: () => getSales(),
+    enabled: !!user
   });
 
   const { data: products, isLoading: isLoadingProducts, isError: isErrorProducts } = useQuery({
     queryKey: ['products'],
-    queryFn: getProducts
+    queryFn: getProducts,
+    enabled: !!user
   });
 
   const [selectedSale, setSelectedSale] = useState<any>(null);
@@ -41,7 +43,8 @@ export default function AdminDashboard() {
 
   const { data: customers, isError: isErrorCustomers } = useQuery({
     queryKey: ['customers'],
-    queryFn: getCustomers
+    queryFn: getCustomers,
+    enabled: !!user
   });
 
   const { data: settings } = useQuery({

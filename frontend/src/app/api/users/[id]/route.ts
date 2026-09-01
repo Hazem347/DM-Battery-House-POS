@@ -32,7 +32,11 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     return NextResponse.json({ success: true }, { status: 200 });
 
   } catch (error: any) {
-    console.error('Error updating user:', error);
-    return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
+    console.error('Error updating user - FULL STACK:', error.stack || error);
+    return NextResponse.json({ 
+      error: error.message || 'Internal Server Error',
+      code: error.code || 'UNKNOWN_ERROR',
+      details: 'Firebase Admin SDK might be misconfigured in production'
+    }, { status: 500 });
   }
 }

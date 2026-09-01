@@ -224,11 +224,16 @@ export const updateSettings = async (data: any) => {
 
 // --- Upload API ---
 export const uploadImage = async (file: File) => {
-  const fileName = `${Date.now()}_${file.name}`;
-  const fileRef = ref(storage, `products/images/${fileName}`);
-  await uploadBytes(fileRef, file);
-  const downloadURL = await getDownloadURL(fileRef);
-  return { url: downloadURL };
+  try {
+    const fileName = `${Date.now()}_${file.name}`;
+    const fileRef = ref(storage, `products/images/${fileName}`);
+    await uploadBytes(fileRef, file);
+    const downloadURL = await getDownloadURL(fileRef);
+    return { url: downloadURL };
+  } catch (error: any) {
+    console.error("Firebase Storage Upload Error [FULL STACK]:", error);
+    throw new Error(`Storage Error: ${error.message || "Failed to upload image"}`);
+  }
 };
 
 // --- Inquiries API ---

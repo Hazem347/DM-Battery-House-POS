@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     document.cookie = `token=; path=/; max-age=0`;
     document.cookie = `role=; path=/; max-age=0`;
     setUser(null);
-    router.push('/login');
+    window.location.href = '/login';
   };
 
   return (

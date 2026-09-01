@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo, useRef } from "react";
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getProducts, getCategories, createSale, getSettings } from '@/lib/api';
 import { formatCurrency } from '@/lib/currency';
 
@@ -11,7 +11,9 @@ interface CartItem {
 }
 
 export default function POSPage() {
+  const queryClient = useQueryClient();
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [paymentMethod, setPaymentMethod] = useState<'CASH' | 'CARD' | 'DIGITAL'>('CASH');
   const [heldCarts, setHeldCarts] = useState<CartItem[][]>([]);
   const [discount, setDiscount] = useState<number>(0);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
@@ -101,12 +103,16 @@ export default function POSPage() {
         discount: discount,
         tax: tax,
         finalAmount: grandTotal,
-        paymentMethod: 'CASH',
+        paymentMethod: paymentMethod,
         amountPaid: grandTotal,
         changeAmount: 0
       };
       
       const saleResponse = await createSale(saleData);
+      
+      // Invalidate queries so Dashboard and Inventory update
+      queryClient.invalidateQueries({ queryKey: ['sales'] });
+      queryClient.invalidateQueries({ queryKey: ['products'] });
       
       setCompletedSale(saleResponse);
       setCart([]);
@@ -311,6 +317,29 @@ export default function POSPage() {
             >
               <span className="material-symbols-outlined text-base">delete</span> Void
             </button>
+          </div>
+          <div className="mb-4">
+            <label className="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2 block">Payment Method</label>
+            <div className="grid grid-cols-3 gap-2">
+              <button 
+                onClick={() => setPaymentMethod('CASH')}
+                className={`py-2 text-sm font-bold rounded-lg border transition-colors ${paymentMethod === 'CASH' ? 'bg-primary text-on-primary border-primary' : 'bg-surface border-outline-variant text-on-surface-variant hover:bg-surface-variant'}`}
+              >
+                Cash
+              </button>
+              <button 
+                onClick={() => setPaymentMethod('CARD')}
+                className={`py-2 text-sm font-bold rounded-lg border transition-colors ${paymentMethod === 'CARD' ? 'bg-primary text-on-primary border-primary' : 'bg-surface border-outline-variant text-on-surface-variant hover:bg-surface-variant'}`}
+              >
+                Card
+              </button>
+              <button 
+                onClick={() => setPaymentMethod('DIGITAL')}
+                className={`py-2 text-sm font-bold rounded-lg border transition-colors ${paymentMethod === 'DIGITAL' ? 'bg-primary text-on-primary border-primary' : 'bg-surface border-outline-variant text-on-surface-variant hover:bg-surface-variant'}`}
+              >
+                Digital
+              </button>
+            </div>
           </div>
           <button 
             onClick={handleCheckout}
